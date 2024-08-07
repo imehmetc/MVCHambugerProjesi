@@ -20,6 +20,6 @@ namespace DAL.Entities
 
         // Relational Properties
         public List<Address> Addresses { get; set; }
-
+         
     }
 }

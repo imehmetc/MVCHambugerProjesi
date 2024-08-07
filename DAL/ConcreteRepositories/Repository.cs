@@ -1,5 +1,5 @@
 ﻿using DAL.AbstractRepositories;
-using DAL.Context;
+using DAL.Data;
 using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DAL.ConcreteRepositories
 {
-    public abstract class Repository<T> : IRepository<T> where T : BaseEntity
+    public class Repository<T> : IRepository<T> where T : BaseEntity
     {
         private readonly AppDbContext _context;
         private readonly DbSet<T> _entities;

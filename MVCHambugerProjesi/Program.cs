@@ -1,6 +1,8 @@
+using BLL.AbstractServices;
+using BLL.ConcreteServices;
 using DAL.AbstractRepositories;
 using DAL.ConcreteRepositories;
-using DAL.Context;
+using DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -16,6 +18,12 @@ namespace MVCHambugerProjesi
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            builder.Services.AddScoped(typeof(IUserService), typeof(UserService));
+            builder.Services.AddScoped(typeof(IMenuDetailService), typeof(MenuDetailService));
+            builder.Services.AddScoped(typeof(IExtraItemService), typeof(ExtraItemService));
+            builder.Services.AddScoped(typeof(IMenuService), typeof(MenuService));
+            builder.Services.AddScoped(typeof(IOrderService), typeof(OrderService));
+           
 
             builder.Services.AddAutoMapper(typeof(MVCHambugerProjesi.Mappings.AutoMapperProfile), typeof(BLL.Mappings.AutoMapperProfile));
 
