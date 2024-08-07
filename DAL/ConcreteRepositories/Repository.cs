@@ -16,7 +16,7 @@ namespace DAL.ConcreteRepositories
         private readonly AppDbContext _context;
         private readonly DbSet<T> _entities;
 
-        protected Repository(AppDbContext context)
+        public Repository(AppDbContext context)
         {
             _context = context;
             _entities = _context.Set<T>();
