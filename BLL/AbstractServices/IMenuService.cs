@@ -14,5 +14,6 @@ namespace BLL.AbstractServices
         Task DeleteMenu(int menuId);
         Task<List<MenuDto>> GetAllMenus();
         Task UpdateMenu(int menuId, MenuDto menuDto);
+        Task<List<MenuDetailDto>> GetAllMenuDetails();
     }
 }

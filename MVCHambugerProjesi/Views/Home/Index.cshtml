@@ -1,8 +1,50 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model List<MenuViewModel>
+<h3 class="text-center m-4">Hamburger</h3>
+<div class="row">
+    <!-- Menü -->
+    <div class="col-md-4">
+        <div class="border bg-light p-3 rounded">
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+            <h4 class="text-center">Filtre</h4>
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+                <label class="form-check-label" for="flexRadioDefault1">
+                    Restoran Puanı
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                <label class="form-check-label" for="flexRadioDefault2">
+                    Görüntülenme
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ürünler -->
+    <div class="col-8 rounded">
+        @foreach (var item in @Model)
+        {
+            <div class="card mb-3" style="max-width: 840px;">
+                <div class="row g-0 bg-light rounded">
+                    <div class="col-md-4">
+                        <a asp-route-id="@item.Id" asp-action="MenuDetail">
+                            <img style="object-fit: cover;" src="~/img/@item.Photo" alt="Image description">
+                        </a>
+
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body p-4">
+                            <h5 class="card-title text-primary"><a class="text-primary fs-5 text-uppercase" asp-route-id="@item.Id" asp-action="MenuDetail">@item.Name</a> </h5>
+                            <p class="card-text">
+                                @item.Description
+                            </p>
+                            <p class="card-text"><small class="text-muted">₺@item.Price | 20-30 dk</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>

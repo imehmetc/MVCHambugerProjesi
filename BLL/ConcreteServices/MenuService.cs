@@ -3,6 +3,7 @@ using BLL.AbstractServices;
 using BLL.Dtos;
 using DAL.AbstractRepositories;
 using DAL.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +16,13 @@ namespace BLL.ConcreteServices
     {
         private readonly IRepository<Menu> _menuRepository;
         private readonly IMapper _mapper;
+        private readonly IRepository<MenuDetail> _menuDetailRepository;
 
-        public MenuService(IRepository<Menu> menuRepository, IMapper mapper)
+        public MenuService(IRepository<Menu> menuRepository, IMapper mapper, IRepository<MenuDetail> menuDetailRepository)
         {
             _menuRepository = menuRepository;
             _mapper = mapper;
+            _menuDetailRepository = menuDetailRepository;
         }
 
         public async Task AddMenu(MenuDto menuDto)
@@ -35,6 +38,14 @@ namespace BLL.ConcreteServices
         {
             if(menuId != null)
                 await _menuRepository.DeleteAsync(menuId);
+        }
+
+        public async Task<List<MenuDetailDto>> GetAllMenuDetails()
+        {
+            var menus = await _menuDetailRepository.GetAllWithIncludes(x => x.Menu, x => x.ExtraItem).ToListAsync();
+            var result = _mapper.Map<List<MenuDetailDto>>(menus);
+            
+            return result;
         }
 
         public async Task<List<MenuDto>> GetAllMenus()

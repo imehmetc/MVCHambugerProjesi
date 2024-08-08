@@ -51,18 +51,23 @@ namespace BLL.ConcreteServices
             var user = users.FirstOrDefault(x => x.Username == username && x.Password == password);
 
             return _mapper.Map<UserDto>(user);
-
         }
 
-        public async Task Register(UserDto userDto, AddressDto addressDto)
+        public async Task PasswordChange(int userId, string newPassword)
+        {
+            var user = await _userRepository.GetByIdAsync(userId);
+            var userDto = _mapper.Map<UserDto>(user);
+
+            userDto.Password = newPassword;
+            await _userRepository.UpdateAsync(_mapper.Map<User>(userDto));
+        }
+
+        public async Task Register(UserDto userDto)
         {
             var user = _mapper.Map<User>(userDto);
-            user.Addresses = new List<Address>(); // ?
-
-            var address = _mapper.Map<Address>(addressDto);
-            user.Addresses.Add(address);
 
             await _userRepository.AddAsync(user);
         }
+
     }
 }

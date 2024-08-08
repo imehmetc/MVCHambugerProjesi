@@ -1,0 +1,39 @@
+﻿@using DAL.Data
+@model UserViewModel
+@inject AppDbContext _context;
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/profile.css" />
+}
+
+<div class="container">
+    <div class="profile-header text-center">
+        @if (!string.IsNullOrEmpty(Model.Photo))
+        {
+            <img src="~/img/@Model.Photo" alt="Profile Photo" class="profile-photo" />
+        }
+        else
+        {
+            <img src="https://via.placeholder.com/150" alt="Profile Photo" class="profile-photo" />
+        }
+        <h1>@Model.FirstName @Model.LastName</h1>
+        <p>@Model.Username</p>
+        <p><strong>Birth Date:</strong> @Model.BirthDate.ToString("dd MMMM yyyy")</p>
+
+        <!-- Fotoğraf Ekleme Formu -->
+        <form asp-action="UpdatePhoto" method="POST" enctype="multipart/form-data">
+            <div class="mb-3 ">
+                <input asp-for="Id" name="userId" hidden />
+                <input asp-for="Photo" name="photo" type="file" class="form-control w-25 d-inline-block" id="photo" required>
+                <button type="submit" class="btn btn-success mt-3" id="saveButton">Save</button>
+            </div>
+        </form>
+        <a class="btn btn-register" asp-route-id="@Model.Id" asp-controller="User" asp-action="PasswordChange">PasswordChange</a>
+    </div>
+
+    <div class="profile-info">
+        <h4>About</h4>
+        <p>@Model.FirstName @Model.LastName's Profile Page</p>
+    </div>
+  
+</div>

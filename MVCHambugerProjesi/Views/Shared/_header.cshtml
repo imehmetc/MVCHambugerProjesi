@@ -1,0 +1,47 @@
+﻿@{
+    var userId = Context.Session.GetInt32("UserId");
+}
+
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm  box-shadow mb-3">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="nav__links">
+                   @*  <li>
+                        <a class="logo" asp-area="" asp-controller="Home" asp-action="Index">Index</a>
+                    </li> *@
+                    @if (userId != null)
+                    {
+                        <li>
+                            <a  asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+
+                        <li>
+                            <a asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
+                        </li>
+                        <li>
+                            <a class="cta" asp-area="" asp-route-id="@userId" asp-controller="User" asp-action="Profile"><button>Profile</button></a>
+                        </li>
+
+                    }
+
+                    else
+                    {
+                        <li>
+                            <a  asp-area="" asp-controller="User" asp-action="Login">Login</a>
+                        </li>
+
+                        <li>
+                            <a  asp-area="" asp-controller="User" asp-action="Register">Register</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+</header>

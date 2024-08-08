@@ -6,6 +6,7 @@ using DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,7 +27,7 @@ namespace BLL.ConcreteServices
         public async Task CreateNewOrder(OrderDto orderDto) // Order > MenuDetail > Menu.Price ulaşmam gerekli (ThenInclude)
         {
             var menu = await _menuRepository.GetByIdAsync(orderDto.MenuDetailId);
-            
+
             orderDto.TotalPrice = orderDto.Quantity * menu.Price;
 
             await _orderRepository.AddAsync(_mapper.Map<Order>(orderDto));

@@ -1,4 +1,5 @@
 ﻿using DAL.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace MVCHambugerProjesi.Models
 {
@@ -13,9 +14,11 @@ namespace MVCHambugerProjesi.Models
         public string Username { get; set; }
         public string Password { get; set; }
         public bool IsAdmin { get; set; } = false;
-
+        
+        [Compare("Password", ErrorMessage = "Passwords do not match.")]
+        public string ConfirmPassword { get; set; }
 
         // Relational Properties
-        public List<AddressViewModel> AddressViewModels { get; set; }
+        public List<AddressViewModel>? AddressViewModels { get; set; }
     }
 }

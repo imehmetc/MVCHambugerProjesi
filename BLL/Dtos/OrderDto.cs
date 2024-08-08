@@ -14,7 +14,7 @@ namespace BLL.Dtos
         public int AddressId { get; set; }
         public int MenuDetailId { get; set; }
         public double TotalPrice { get; set; }
-        
+
         // Relational Properties
         public AddressDto AddressDto { get; set; }
         public MenuDetailDto MenuDetailDto { get; set; }

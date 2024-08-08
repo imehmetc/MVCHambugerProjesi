@@ -1,0 +1,26 @@
+﻿@section Styles {
+    <link rel="stylesheet" href="~/css/login.css" />
+}
+
+
+<div class="container">
+    <div class="login-container">
+        <h2 class="login-title text-center">Login</h2>
+        <form asp-controller="User" asp-action="Login" method="POST">
+            <div class="mb-3">
+                <input type="text" name="userName" class="form-control" id="username" placeholder="Username" required>
+            </div>
+            <div class="mb-3">
+                <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
+            </div>
+            @if (ViewBag.ErrorMessage != null)
+            {
+                <div class="alert alert-danger">
+                    @ViewBag.ErrorMessage
+                </div>
+            }
+            <button type="submit" class="btn btn-custom">Login</button>
+        </form>
+        <a class="btn btn-register" asp-controller="User" asp-action="Register">Register</a>
+    </div>
+</div>

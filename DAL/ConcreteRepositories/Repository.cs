@@ -2,12 +2,14 @@
 using DAL.Data;
 using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Schema;
 
 namespace DAL.ConcreteRepositories
 {
@@ -20,7 +22,7 @@ namespace DAL.ConcreteRepositories
         {
             _context = context;
             _entities = _context.Set<T>();
-            
+
         }
         public async Task AddAsync(T entity)
         {
@@ -43,7 +45,7 @@ namespace DAL.ConcreteRepositories
         public async Task DeleteAsync(int id)
         {
             var entity = await GetByIdAsync(id);
-           
+
             if (entity != null)
             {
                 entity.DeletedDate = DateTime.Now;
@@ -71,20 +73,48 @@ namespace DAL.ConcreteRepositories
             return query;
         }
 
+
         public async Task<T> GetByIdAsync(int id)
         {
-            return await _entities.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            var result = await _entities.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            return result;
 
         }
 
         public async Task RemoveAsync(int id)
         {
             var entity = await GetByIdAsync(id);
-            
+
             _entities.Remove(entity);
             await _context.SaveChangesAsync();
         }
+        
+        //public IQueryable<T> GetAllWithIncludesThenIncludes(
+        //   Expression<Func<T, object>>[] includes,
+        //   params Expression<Func<object, object>>[] thenIncludes)
+        //{
+        //    IQueryable<T> query = _entities;
 
+        //    if (includes != null)
+        //    {
+        //        foreach (var include in includes)
+        //        {
+        //            var includableQuery = query.Include(include);
+
+        //            if (thenIncludes != null)
+        //            {
+        //                foreach (var thenInclude in thenIncludes)
+        //                {
+        //                    includableQuery = includableQuery.ThenInclude(thenInclude);
+        //                }
+        //            }
+
+        //            query = (IQueryable<T>)includableQuery;
+        //        }
+        //    }
+
+        //    return query;
+        //}
         public async Task UpdateAsync(T entity)
         {
             if (entity != null)
@@ -93,7 +123,7 @@ namespace DAL.ConcreteRepositories
                 _entities.Update(entity);
                 await _context.SaveChangesAsync();
             }
-            
+
         }
     }
 }

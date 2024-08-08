@@ -17,6 +17,8 @@ namespace MVCHambugerProjesi
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            builder.Services.AddSession(); // session için gerekli.
+
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddScoped(typeof(IUserService), typeof(UserService));
             builder.Services.AddScoped(typeof(IMenuDetailService), typeof(MenuDetailService));
@@ -43,13 +45,15 @@ namespace MVCHambugerProjesi
            
             app.UseStaticFiles();
 
+            app.UseSession();
+
             app.UseRouting();
 
             app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=User}/{action=Login}/{id?}");
 
             app.Run();
         }

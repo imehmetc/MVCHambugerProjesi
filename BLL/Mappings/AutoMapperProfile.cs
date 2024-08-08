@@ -13,11 +13,16 @@ namespace BLL.Mappings
     {
         public AutoMapperProfile()
         {
-            CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<User, UserDto>().ForMember(dest => dest.AddressDtos, opt => opt.MapFrom(src => src.Addresses)).ReverseMap();
             CreateMap<Address, AddressDto>().ReverseMap();
             CreateMap<Menu, MenuDto>().ReverseMap();
-            CreateMap<Order, OrderDto>().ReverseMap();
-            CreateMap<MenuDetail, MenuDetailDto>().ReverseMap();
+            CreateMap<Order, OrderDto>().ReverseMap(); 
+            
+            CreateMap<MenuDetail, MenuDetailDto>()
+    .ForMember(dest => dest.MenuDto, opt => opt.MapFrom(src => src.Menu))
+    .ForMember(dest => dest.ExtraItemDto, opt => opt.MapFrom(src => src.ExtraItem))
+    .ReverseMap();
+
             CreateMap<ExtraItem, ExtraItemDto>().ReverseMap();
         }
     }
