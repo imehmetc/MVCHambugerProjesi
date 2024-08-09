@@ -9,6 +9,8 @@ namespace MVCHambugerProjesi.Models
         public string Description { get; set; }
         public string? Photo { get; set; }
         public IFormFile? PhotoUrl { get; set; }
+        public int OrderCount { get; set; }
+        public int ViewCount { get; set; }
 
         // Relational Properties
         public List<MenuDetailViewModel> MenuDetailViewModels { get; set; }

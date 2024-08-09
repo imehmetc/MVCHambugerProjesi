@@ -24,14 +24,14 @@
     </div>
 
     <!-- Ürünler -->
-    <div class="col-8 rounded">
+    <div class="col-8 rounded mb-5">
         @foreach (var item in @Model)
         {
             <div class="card mb-3" style="max-width: 840px;">
                 <div class="row g-0 bg-light rounded">
-                    <div class="col-md-4">
+                    <div class="col-md-4 p-2">
                         <a asp-route-id="@item.Id" asp-action="MenuDetail">
-                            <img style="object-fit: cover;" src="~/img/@item.Photo" alt="Image description">
+                            <img class="img-fluid rounded" width="100%" height="100%" src="~/img/@item.Photo" alt="Image description">
                         </a>
 
                     </div>

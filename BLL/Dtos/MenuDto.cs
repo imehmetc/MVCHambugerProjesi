@@ -12,6 +12,8 @@ namespace BLL.Dtos
         public double Price { get; set; }
         public string Description { get; set; }
         public string? Photo { get; set; }
+        public int OrderCount { get; set; }
+        public int ViewCount { get; set; }
 
         // Relational Properties
         public List<MenuDetailDto> MenuDetailDtos { get; set; }

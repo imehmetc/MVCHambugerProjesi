@@ -15,6 +15,7 @@ namespace DAL.Entities
         public int MenuDetailId { get; set; }
         public double TotalPrice { get; set; }
 
+
         // Relational Properties
         public Address Address { get; set; }
         public MenuDetail MenuDetail { get; set; }
