@@ -1,0 +1,29 @@
+﻿/* Pagination */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.page-item {
+    margin: 0 1px;
+}
+
+    .page-item.active .page-link {
+        background-color: cornflowerblue; /* Aktif sayfa için yeşil arka plan */
+        border-color: cornflowerblue; /* Aktif sayfa için daha koyu yeşil sınır */
+        color: #fff; /* Aktif sayfa için beyaz renk */
+    }
+
+    .page-item.disabled .page-link {
+        background-color: #6c757d; /* Devre dışı sayfalar için gri arka plan */
+        color: #fff; /* Devre dışı sayfalar için beyaz renk */
+        cursor: not-allowed; /* Devre dışı sayfalar için imleç */
+    }

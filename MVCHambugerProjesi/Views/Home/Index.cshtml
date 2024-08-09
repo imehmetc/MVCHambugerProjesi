@@ -1,4 +1,11 @@
-﻿@model List<MenuViewModel>
+﻿@using DAL.Data
+@model List<MenuViewModel>
+@inject AppDbContext _context;
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/index.css" />
+}
+
 <h3 class="text-center m-4">Hamburger</h3>
 <div class="row">
     <!-- Menü -->
@@ -48,3 +55,44 @@
             </div>
         }
     </div>
+
+
+
+    <!-- Pagination   -->
+    <div>
+        @{
+            var currentPage = ViewBag.CurrentPage ?? 1; // Varsayılan olarak 1. sayfa
+            var pageNumbers = Math.Ceiling((double)_context.Menus.Where(x => x.IsDeleted == false).Count() / 5);
+            var nextPage = currentPage + 1;
+            var previousPage = currentPage - 1;
+        }
+
+        <div class="pagination-container mb-2">
+            <ul class="pagination">
+                <li class="page-item disabled">
+                    <a class="page-link" name="pageNumber">@currentPage/@pageNumbers</a>
+                </li>
+                <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                    <a class="page-link" href="/Home/Index/1?pageNumber=1" name="pageNumber"><small>« İlk</small> </a>
+                </li>
+                <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                    <a class="page-link" href="/Home/Index/1?pageNumber=@previousPage" name="pageNumber"><small>←</small> </a>
+                </li>
+                @for (int i = 1; i <= pageNumbers; i++)
+                {
+                    <li class="page-item @(i == currentPage ? "active" : "")">
+                        <a class="page-link " asp-action="Index" asp-route-pageNumber="@i" name="pageNumber">@i</a>
+                    </li>
+
+                }
+                <li class="page-item @(currentPage == pageNumbers ? "disabled" : "") ">
+                    <a class="page-link" href="/Home/Index/1?pageNumber=@nextPage" name="pageNumber"><small>→</small> </a>
+                </li>
+                <li class="page-item @(currentPage == pageNumbers ? "disabled" : "")">
+                    <a class="page-link" href="/Home/Index/1?pageNumber=@pageNumbers" name="pageNumber"><small>Son »</small> </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</div>

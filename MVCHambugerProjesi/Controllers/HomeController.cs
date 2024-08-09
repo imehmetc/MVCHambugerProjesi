@@ -22,10 +22,14 @@ namespace MVCHambugerProjesi.Controllers
             _mapper = mapper;
         }
 
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5)
         {
-            var menus = await _menuService.GetAllMenus();
-            var result = _mapper.Map<List<MenuViewModel>>(menus);
+            ViewBag.CurrentPage = pageNumber;
+            var posts = await _menuService.GetAllMenus();
+            posts = posts.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+
+            var result = _mapper.Map<List<MenuViewModel>>(posts);
             
             return View(result);
         }
