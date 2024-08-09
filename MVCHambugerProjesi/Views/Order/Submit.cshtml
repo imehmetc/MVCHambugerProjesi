@@ -1,5 +1,8 @@
 ﻿@model List<ShoppingItem>
 
+@{
+    var loggedInUserId = Context.Session.GetInt32("UserId");
+}
 <div class="container mt-5">
     <h3>Sepetiniz</h3>
     <div class="list-group">
@@ -15,8 +18,21 @@
         }
     </div>
     <hr />
-    <p>@ViewBag.TotalAmount</p>
+    <p>Toplam Tutar: <strong>@ViewBag.TotalAmount ₺</strong> </p>
+    <div class="mb-4">
+        <form asp-action="CreateOrder" method="POST">
+            <input asp-route-id="@loggedInUserId" hidden />
+            <label>Adres Seçin: </label>
+            <select id="address" name="address" class="form-control ml-2 w-25 mb-3" style="display:inline;">
+                @foreach (AddressViewModel item in ViewBag.UserAddresses)
+                {
+                    <option value="@item.Id"> @item.Country / @item.City / @item.FullAddress</option>
+                }
 
-    <button class="btn btn-outline-primary">Siparişi ver</button>
-    <a class="btn btn-outline-danger" asp-controller="Home" asp-action="Index">Geri Dön</a>
+            </select>
+            <br />
+            <button class="btn btn-outline-primary">Siparişi ver</button>
+            <a class="btn btn-outline-danger" asp-controller="Home" asp-action="Index">Geri Dön</a>
+        </form>
+    </div>
 </div>

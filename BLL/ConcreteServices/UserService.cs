@@ -32,7 +32,7 @@ namespace BLL.ConcreteServices
 
         public async Task<List<UserDto>> GetAllWithIncludesUsers()
         {
-            var users = await _userRepository.GetAllWithIncludes().ToListAsync();
+            var users = await _userRepository.GetAllWithIncludes(x => x.Addresses).ToListAsync();
             var mappedUsers = _mapper.Map<List<UserDto>>(users);
 
             return mappedUsers;
