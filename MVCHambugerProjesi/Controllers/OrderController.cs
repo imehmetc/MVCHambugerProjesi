@@ -39,8 +39,6 @@ namespace MVCHambugerProjesi.Controllers
             var userAddresses = userViewModel.AddressViewModels;
             ViewBag.UserAddresses = userAddresses;
 
-            var a = 3;
-
             return View(items); // Order/Submit.cshtml adlı view'a yönlendir
         }
 

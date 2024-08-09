@@ -15,5 +15,6 @@ namespace BLL.AbstractServices
         Task<List<MenuDto>> GetAllMenus();
         Task UpdateMenu(int menuId, MenuDto menuDto);
         Task<List<MenuDetailDto>> GetAllMenuDetails();
+        Task UpdateMenuViewCount(int menuId);
     }
 }

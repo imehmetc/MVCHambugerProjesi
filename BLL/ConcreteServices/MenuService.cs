@@ -74,5 +74,10 @@ namespace BLL.ConcreteServices
             await _menuRepository.UpdateAsync(findedMenu);
 
         }
+
+        public async Task UpdateMenuViewCount(int menuId)
+        {
+            await _menuRepository.UpdateViewCount(menuId);
+        }
     }
 }

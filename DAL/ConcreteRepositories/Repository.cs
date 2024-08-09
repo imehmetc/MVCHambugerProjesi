@@ -72,7 +72,13 @@ namespace DAL.ConcreteRepositories
 
             return query;
         }
-
+        public async Task UpdateViewCount(int menuId)
+        {
+            var menu = await _context.Menus.FindAsync(menuId);
+            menu.ViewCount++;
+            menu.ModifiedDate = DateTime.Now;
+            await _context.SaveChangesAsync();
+        }
 
         public async Task<T> GetByIdAsync(int id)
         {

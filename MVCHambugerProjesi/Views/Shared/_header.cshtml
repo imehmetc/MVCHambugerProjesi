@@ -1,5 +1,6 @@
 ﻿@{
     var userId = Context.Session.GetInt32("UserId");
+    var userName = Context.Session.GetString("UserName");
 }
 
 <header>
@@ -11,32 +12,35 @@
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="nav__links">
-                   @*  <li>
-                        <a class="logo" asp-area="" asp-controller="Home" asp-action="Index">Index</a>
-                    </li> *@
+                     <li>
+                    <a class="logo" asp-area="" asp-controller="Home" asp-action="Index">Logo</a>
+                    </li>
                     @if (userId != null)
                     {
                         <li>
-                            <a  asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li>
+                            <span class="ms-2">@userName</span>
+                        </li>
+                        
+                        <li>
+                            <a  asp-route-id="@userId" asp-controller="User" asp-action="Profile"><button>Profile</button></a>
                         </li>
 
                         <li>
                             <a asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
                         </li>
-                        <li>
-                            <a class="cta" asp-area="" asp-route-id="@userId" asp-controller="User" asp-action="Profile"><button>Profile</button></a>
-                        </li>
-
                     }
 
                     else
                     {
                         <li>
-                            <a  asp-area="" asp-controller="User" asp-action="Login">Login</a>
+                            <a asp-area="" asp-controller="User" asp-action="Login">Login</a>
                         </li>
 
                         <li>
-                            <a  asp-area="" asp-controller="User" asp-action="Register">Register</a>
+                            <a asp-area="" asp-controller="User" asp-action="Register">Register</a>
                         </li>
                     }
                 </ul>
