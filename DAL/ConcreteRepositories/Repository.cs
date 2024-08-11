@@ -94,33 +94,7 @@ namespace DAL.ConcreteRepositories
             _entities.Remove(entity);
             await _context.SaveChangesAsync();
         }
-        
-        //public IQueryable<T> GetAllWithIncludesThenIncludes(
-        //   Expression<Func<T, object>>[] includes,
-        //   params Expression<Func<object, object>>[] thenIncludes)
-        //{
-        //    IQueryable<T> query = _entities;
 
-        //    if (includes != null)
-        //    {
-        //        foreach (var include in includes)
-        //        {
-        //            var includableQuery = query.Include(include);
-
-        //            if (thenIncludes != null)
-        //            {
-        //                foreach (var thenInclude in thenIncludes)
-        //                {
-        //                    includableQuery = includableQuery.ThenInclude(thenInclude);
-        //                }
-        //            }
-
-        //            query = (IQueryable<T>)includableQuery;
-        //        }
-        //    }
-
-        //    return query;
-        //}
         public async Task UpdateAsync(T entity)
         {
             if (entity != null)
@@ -130,6 +104,11 @@ namespace DAL.ConcreteRepositories
                 await _context.SaveChangesAsync();
             }
 
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }

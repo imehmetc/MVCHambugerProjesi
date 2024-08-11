@@ -20,5 +20,6 @@ namespace BLL.Dtos
 
         // Relational Properties
         public List<AddressDto> AddressDtos { get; set; }
+        public List<OrderDto> OrderDtos { get; set; }
     }
 }

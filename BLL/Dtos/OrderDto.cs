@@ -1,4 +1,6 @@
 ﻿using BLL.Enums;
+using DAL.Entities;
+using DAL.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +11,16 @@ namespace BLL.Dtos
 {
     public class OrderDto : BaseDto
     {
-        public OrderSizeDto? OrderSizeDto { get; set; } // ENUM
-        public int Quantity { get; set; }
-        public int AddressId { get; set; }
-        public int MenuDetailId { get; set; }
+        public OrderSize? OrderSize { get; set; } // ENUM
+     
         public double TotalPrice { get; set; }
+        public DateTime OrderDate { get; set; } = DateTime.Now;
+        public bool IsActive { get; set; } = true;
+        public int UserId { get; set; }
+
 
         // Relational Properties
-        public AddressDto AddressDto { get; set; }
-        public MenuDetailDto MenuDetailDto { get; set; }
+        public List<OrderDetailDto> OrderDetailDtos { get; set; }
+        public UserDto UserDto { get; set; }
     }
 }

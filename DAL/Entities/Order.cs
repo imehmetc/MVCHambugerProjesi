@@ -10,14 +10,15 @@ namespace DAL.Entities
     public class Order : BaseEntity
     {
         public OrderSize? OrderSize { get; set; } // ENUM
-        public int Quantity { get; set; }
-        public int AddressId { get; set; }
-        public int MenuDetailId { get; set; }
+      
         public double TotalPrice { get; set; }
+        public DateTime OrderDate { get; set; } = DateTime.Now;
+        public bool IsActive { get; set; } = true;
+        public int UserId { get; set; }
 
 
         // Relational Properties
-        public Address Address { get; set; }
-        public MenuDetail MenuDetail { get; set; }
+        public List<OrderDetail> OrderDetails { get; set; }
+        public User User { get; set; }
     }
 }

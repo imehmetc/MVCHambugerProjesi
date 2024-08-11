@@ -14,6 +14,7 @@ namespace DAL.Entities
 
         // Relational Properties
         public List<MenuDetail> MenuDetails { get; set; }
+        public List<OrderDetail> OrderDetails { get; set; }
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using DAL.Entities;
+﻿using BLL.Dtos;
+using DAL.Entities;
 
 namespace MVCHambugerProjesi.Models
 {
@@ -14,5 +15,6 @@ namespace MVCHambugerProjesi.Models
 
         // Relational Properties
         public List<MenuDetailViewModel> MenuDetailViewModels { get; set; }
+        public List<OrderDetailViewModel> OrderDetailViewModels { get; set; }
     }
 }

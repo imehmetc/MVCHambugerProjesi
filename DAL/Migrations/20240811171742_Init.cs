@@ -141,9 +141,10 @@ namespace DAL.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderSize = table.Column<int>(type: "int", nullable: true),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    AddressId = table.Column<int>(type: "int", nullable: false),
-                    MenuDetailId = table.Column<int>(type: "int", nullable: false),
                     TotalPrice = table.Column<double>(type: "float", nullable: false),
+                    OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -153,17 +154,54 @@ namespace DAL.Migrations
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Orders_Addresses_AddressId",
+                        name: "FK_Orders_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderDetails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AddressId = table.Column<int>(type: "int", nullable: false),
+                    ExtraItemId = table.Column<int>(type: "int", nullable: false),
+                    MenuId = table.Column<int>(type: "int", nullable: false),
+                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OrderDetails_Addresses_AddressId",
                         column: x => x.AddressId,
                         principalTable: "Addresses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Orders_MenuDetails_MenuDetailId",
-                        column: x => x.MenuDetailId,
-                        principalTable: "MenuDetails",
+                        name: "FK_OrderDetails_ExtraItems_ExtraItemId",
+                        column: x => x.ExtraItemId,
+                        principalTable: "ExtraItems",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrderDetails_Menus_MenuId",
+                        column: x => x.MenuId,
+                        principalTable: "Menus",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrderDetails_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.InsertData(
@@ -171,11 +209,11 @@ namespace DAL.Migrations
                 columns: new[] { "Id", "AdditionalPrice", "CreatedDate", "DeletedDate", "IsDeleted", "ModifiedDate", "Name" },
                 values: new object[,]
                 {
-                    { 1, 1.0, new DateTime(2024, 8, 9, 14, 42, 25, 641, DateTimeKind.Local).AddTicks(4064), null, false, null, "Cheese" },
-                    { 2, 1.5, new DateTime(2024, 8, 9, 14, 42, 25, 641, DateTimeKind.Local).AddTicks(4068), null, false, null, "Bacon" },
-                    { 3, 1.25, new DateTime(2024, 8, 9, 14, 42, 25, 641, DateTimeKind.Local).AddTicks(4071), null, false, null, "Mushrooms" },
-                    { 4, 2.0, new DateTime(2024, 8, 9, 14, 42, 25, 641, DateTimeKind.Local).AddTicks(4074), null, false, null, "Avocado" },
-                    { 5, 0.75, new DateTime(2024, 8, 9, 14, 42, 25, 641, DateTimeKind.Local).AddTicks(4077), null, false, null, "Onions" }
+                    { 1, 1.0, new DateTime(2024, 8, 11, 20, 17, 41, 745, DateTimeKind.Local).AddTicks(7002), null, false, null, "Cheese" },
+                    { 2, 1.5, new DateTime(2024, 8, 11, 20, 17, 41, 745, DateTimeKind.Local).AddTicks(7004), null, false, null, "Bacon" },
+                    { 3, 1.25, new DateTime(2024, 8, 11, 20, 17, 41, 745, DateTimeKind.Local).AddTicks(7006), null, false, null, "Mushrooms" },
+                    { 4, 2.0, new DateTime(2024, 8, 11, 20, 17, 41, 745, DateTimeKind.Local).AddTicks(7007), null, false, null, "Avocado" },
+                    { 5, 0.75, new DateTime(2024, 8, 11, 20, 17, 41, 745, DateTimeKind.Local).AddTicks(7009), null, false, null, "Onions" }
                 });
 
             migrationBuilder.InsertData(
@@ -183,11 +221,11 @@ namespace DAL.Migrations
                 columns: new[] { "Id", "CreatedDate", "DeletedDate", "Description", "IsDeleted", "ModifiedDate", "Name", "OrderCount", "Photo", "Price", "ViewCount" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 8, 9, 14, 42, 25, 641, DateTimeKind.Local).AddTicks(4156), null, "Juicy beef burger", false, null, "Burger", 10, null, 8.9900000000000002, 50 },
-                    { 2, new DateTime(2024, 8, 9, 14, 42, 25, 641, DateTimeKind.Local).AddTicks(4162), null, "Cheese and pepperoni", false, null, "Pizza", 20, null, 12.99, 100 },
-                    { 3, new DateTime(2024, 8, 9, 14, 42, 25, 641, DateTimeKind.Local).AddTicks(4166), null, "Creamy Alfredo pasta", false, null, "Pasta", 15, null, 10.99, 75 },
-                    { 4, new DateTime(2024, 8, 9, 14, 42, 25, 641, DateTimeKind.Local).AddTicks(4170), null, "Fresh garden salad", false, null, "Salad", 8, null, 7.9900000000000002, 40 },
-                    { 5, new DateTime(2024, 8, 9, 14, 42, 25, 641, DateTimeKind.Local).AddTicks(4174), null, "Spicy chicken tacos", false, null, "Tacos", 12, null, 9.9900000000000002, 60 }
+                    { 1, new DateTime(2024, 8, 11, 20, 17, 41, 745, DateTimeKind.Local).AddTicks(7048), null, "Juicy beef burger", false, null, "Burger", 10, null, 8.9900000000000002, 50 },
+                    { 2, new DateTime(2024, 8, 11, 20, 17, 41, 745, DateTimeKind.Local).AddTicks(7051), null, "Cheese and pepperoni", false, null, "Pizza", 20, null, 12.99, 100 },
+                    { 3, new DateTime(2024, 8, 11, 20, 17, 41, 745, DateTimeKind.Local).AddTicks(7053), null, "Creamy Alfredo pasta", false, null, "Pasta", 15, null, 10.99, 75 },
+                    { 4, new DateTime(2024, 8, 11, 20, 17, 41, 745, DateTimeKind.Local).AddTicks(7055), null, "Fresh garden salad", false, null, "Salad", 8, null, 7.9900000000000002, 40 },
+                    { 5, new DateTime(2024, 8, 11, 20, 17, 41, 745, DateTimeKind.Local).AddTicks(7057), null, "Spicy chicken tacos", false, null, "Tacos", 12, null, 9.9900000000000002, 60 }
                 });
 
             migrationBuilder.InsertData(
@@ -195,11 +233,11 @@ namespace DAL.Migrations
                 columns: new[] { "Id", "BirthDate", "CreatedDate", "DeletedDate", "Email", "FirstName", "IsAdmin", "IsDeleted", "LastName", "ModifiedDate", "Password", "Photo", "Username" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(1980, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 8, 9, 14, 42, 25, 641, DateTimeKind.Local).AddTicks(3635), null, "admin@example.com", "Admin", true, false, "User", null, "admin123", null, "admin" },
-                    { 2, new DateTime(1990, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 8, 9, 14, 42, 25, 641, DateTimeKind.Local).AddTicks(3639), null, "john@example.com", "John", false, false, "Doe", null, "password123", null, "john" },
-                    { 3, new DateTime(1985, 7, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 8, 9, 14, 42, 25, 641, DateTimeKind.Local).AddTicks(3644), null, "jane@example.com", "Jane", false, false, "Smith", null, "password123", null, "jane" },
-                    { 4, new DateTime(1975, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 8, 9, 14, 42, 25, 641, DateTimeKind.Local).AddTicks(3649), null, "michael@example.com", "Michael", false, false, "Brown", null, "password123", null, "michael" },
-                    { 5, new DateTime(1995, 8, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 8, 9, 14, 42, 25, 641, DateTimeKind.Local).AddTicks(3654), null, "emily@example.com", "Emily", false, false, "Clark", null, "password123", null, "emily" }
+                    { 1, new DateTime(1980, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 8, 11, 20, 17, 41, 745, DateTimeKind.Local).AddTicks(6724), null, "admin@example.com", "Admin", true, false, "User", null, "admin123", null, "admin" },
+                    { 2, new DateTime(1990, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 8, 11, 20, 17, 41, 745, DateTimeKind.Local).AddTicks(6727), null, "john@example.com", "John", false, false, "Doe", null, "password123", null, "john" },
+                    { 3, new DateTime(1985, 7, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 8, 11, 20, 17, 41, 745, DateTimeKind.Local).AddTicks(6731), null, "jane@example.com", "Jane", false, false, "Smith", null, "password123", null, "jane" },
+                    { 4, new DateTime(1975, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 8, 11, 20, 17, 41, 745, DateTimeKind.Local).AddTicks(6733), null, "michael@example.com", "Michael", false, false, "Brown", null, "password123", null, "michael" },
+                    { 5, new DateTime(1995, 8, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 8, 11, 20, 17, 41, 745, DateTimeKind.Local).AddTicks(6736), null, "emily@example.com", "Emily", false, false, "Clark", null, "password123", null, "emily" }
                 });
 
             migrationBuilder.InsertData(
@@ -207,11 +245,11 @@ namespace DAL.Migrations
                 columns: new[] { "Id", "City", "Country", "CreatedDate", "DeletedDate", "FullAddress", "IsDeleted", "ModifiedDate", "PostalCode", "UserId" },
                 values: new object[,]
                 {
-                    { 1, "New York", "USA", new DateTime(2024, 8, 9, 14, 42, 25, 641, DateTimeKind.Local).AddTicks(3968), null, "123 Main St", false, null, 10001, 2 },
-                    { 2, "Los Angeles", "USA", new DateTime(2024, 8, 9, 14, 42, 25, 641, DateTimeKind.Local).AddTicks(3975), null, "456 Elm St", false, null, 90001, 3 },
-                    { 3, "Chicago", "USA", new DateTime(2024, 8, 9, 14, 42, 25, 641, DateTimeKind.Local).AddTicks(3979), null, "789 Pine St", false, null, 60007, 4 },
-                    { 4, "Houston", "USA", new DateTime(2024, 8, 9, 14, 42, 25, 641, DateTimeKind.Local).AddTicks(3983), null, "321 Oak St", false, null, 77001, 5 },
-                    { 5, "Phoenix", "USA", new DateTime(2024, 8, 9, 14, 42, 25, 641, DateTimeKind.Local).AddTicks(3986), null, "654 Maple St", false, null, 85001, 2 }
+                    { 1, "New York", "USA", new DateTime(2024, 8, 11, 20, 17, 41, 745, DateTimeKind.Local).AddTicks(6956), null, "123 Main St", false, null, 10001, 2 },
+                    { 2, "Los Angeles", "USA", new DateTime(2024, 8, 11, 20, 17, 41, 745, DateTimeKind.Local).AddTicks(6959), null, "456 Elm St", false, null, 90001, 3 },
+                    { 3, "Chicago", "USA", new DateTime(2024, 8, 11, 20, 17, 41, 745, DateTimeKind.Local).AddTicks(6961), null, "789 Pine St", false, null, 60007, 4 },
+                    { 4, "Houston", "USA", new DateTime(2024, 8, 11, 20, 17, 41, 745, DateTimeKind.Local).AddTicks(6963), null, "321 Oak St", false, null, 77001, 5 },
+                    { 5, "Phoenix", "USA", new DateTime(2024, 8, 11, 20, 17, 41, 745, DateTimeKind.Local).AddTicks(6965), null, "654 Maple St", false, null, 85001, 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -219,23 +257,11 @@ namespace DAL.Migrations
                 columns: new[] { "Id", "CreatedDate", "DeletedDate", "ExtraItemId", "IsDeleted", "MenuId", "ModifiedDate" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 8, 9, 14, 42, 25, 641, DateTimeKind.Local).AddTicks(4254), null, 1, false, 1, null },
-                    { 2, new DateTime(2024, 8, 9, 14, 42, 25, 641, DateTimeKind.Local).AddTicks(4258), null, 2, false, 2, null },
-                    { 3, new DateTime(2024, 8, 9, 14, 42, 25, 641, DateTimeKind.Local).AddTicks(4261), null, 3, false, 3, null },
-                    { 4, new DateTime(2024, 8, 9, 14, 42, 25, 641, DateTimeKind.Local).AddTicks(4264), null, 4, false, 4, null },
-                    { 5, new DateTime(2024, 8, 9, 14, 42, 25, 641, DateTimeKind.Local).AddTicks(4267), null, 5, false, 5, null }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Orders",
-                columns: new[] { "Id", "AddressId", "CreatedDate", "DeletedDate", "IsDeleted", "MenuDetailId", "ModifiedDate", "OrderSize", "Quantity", "TotalPrice" },
-                values: new object[,]
-                {
-                    { 1, 1, new DateTime(2024, 8, 9, 14, 42, 25, 641, DateTimeKind.Local).AddTicks(4341), null, false, 1, null, 3, 2, 19.98 },
-                    { 2, 2, new DateTime(2024, 8, 9, 14, 42, 25, 641, DateTimeKind.Local).AddTicks(4347), null, false, 2, null, 2, 1, 12.99 },
-                    { 3, 3, new DateTime(2024, 8, 9, 14, 42, 25, 641, DateTimeKind.Local).AddTicks(4352), null, false, 3, null, 1, 3, 32.969999999999999 },
-                    { 4, 4, new DateTime(2024, 8, 9, 14, 42, 25, 641, DateTimeKind.Local).AddTicks(4356), null, false, 4, null, 3, 2, 15.98 },
-                    { 5, 5, new DateTime(2024, 8, 9, 14, 42, 25, 641, DateTimeKind.Local).AddTicks(4360), null, false, 5, null, 2, 1, 9.9900000000000002 }
+                    { 1, new DateTime(2024, 8, 11, 20, 17, 41, 745, DateTimeKind.Local).AddTicks(7094), null, 1, false, 1, null },
+                    { 2, new DateTime(2024, 8, 11, 20, 17, 41, 745, DateTimeKind.Local).AddTicks(7097), null, 2, false, 2, null },
+                    { 3, new DateTime(2024, 8, 11, 20, 17, 41, 745, DateTimeKind.Local).AddTicks(7098), null, 3, false, 3, null },
+                    { 4, new DateTime(2024, 8, 11, 20, 17, 41, 745, DateTimeKind.Local).AddTicks(7100), null, 4, false, 4, null },
+                    { 5, new DateTime(2024, 8, 11, 20, 17, 41, 745, DateTimeKind.Local).AddTicks(7101), null, 5, false, 5, null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -254,36 +280,54 @@ namespace DAL.Migrations
                 column: "MenuId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_AddressId",
-                table: "Orders",
+                name: "IX_OrderDetails_AddressId",
+                table: "OrderDetails",
                 column: "AddressId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_MenuDetailId",
+                name: "IX_OrderDetails_ExtraItemId",
+                table: "OrderDetails",
+                column: "ExtraItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderDetails_MenuId",
+                table: "OrderDetails",
+                column: "MenuId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderDetails_OrderId",
+                table: "OrderDetails",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_UserId",
                 table: "Orders",
-                column: "MenuDetailId");
+                column: "UserId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Orders");
-
-            migrationBuilder.DropTable(
-                name: "Addresses");
-
-            migrationBuilder.DropTable(
                 name: "MenuDetails");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "OrderDetails");
+
+            migrationBuilder.DropTable(
+                name: "Addresses");
 
             migrationBuilder.DropTable(
                 name: "ExtraItems");
 
             migrationBuilder.DropTable(
                 name: "Menus");
+
+            migrationBuilder.DropTable(
+                name: "Orders");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

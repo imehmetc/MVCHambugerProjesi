@@ -6,13 +6,16 @@ namespace MVCHambugerProjesi.Models
 {
     public class OrderViewModel : BaseViewModel
     {
-        public OrderSizeViewModel? OrderSizeViewModel { get; set; } // ENUM
-        public int Quantity { get; set; }
-        public int AddressId { get; set; }
-        public int MenuDetailId { get; set; }
+        public OrderSize? OrderSize { get; set; } // ENUM
+       
+        public double TotalPrice { get; set; }
+        public DateTime OrderDate { get; set; } = DateTime.Now;
+        public bool IsActive { get; set; } = true;
+        public int UserId { get; set; }
+
 
         // Relational Properties
-        public AddressViewModel AddressViewModel { get; set; }
-        public MenuDetailViewModel MenuDetailViewModel { get; set; }
+        public List<OrderDetailViewModel> OrderDetailViewModels { get; set; }
+        public UserViewModel UserViewModel { get; set; }
     }
 }

@@ -14,5 +14,6 @@ namespace BLL.Dtos
 
         // Relational Properties
         public List<MenuDetailDto> MenuDetailDtos { get; set; }
+        public List<OrderDetailDto> OrderDetailDtos { get; set; }
     }
 }

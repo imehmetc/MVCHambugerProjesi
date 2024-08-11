@@ -19,6 +19,7 @@ namespace MVCHambugerProjesi.Mappings
     .ReverseMap();
 
             CreateMap<ExtraItemDto, ExtraItemViewModel>().ReverseMap();
+            CreateMap<OrderDetailDto, OrderDetailViewModel>().ReverseMap();
         }
     }
 }

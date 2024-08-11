@@ -19,9 +19,8 @@ namespace DAL.AbstractRepositories
         Task<T> GetByIdAsync(int id);
         IQueryable<T> GetAllWithIncludes(params Expression<Func<T, object>>[] includes);
         Task UpdateViewCount(int menuId);
+        Task SaveChangesAsync();
 
-        //IQueryable<T> GetAllWithIncludesThenIncludes(
-        //   Expression<Func<T, object>>[] includes,
-        //   params Expression<Func<object, object>>[] thenIncludes);
+
     }
 }

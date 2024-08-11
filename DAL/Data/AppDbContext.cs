@@ -21,10 +21,41 @@ namespace DAL.Data
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<MenuDetail> MenuDetails { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+
+            // Address - OrderDetails
+            modelBuilder.Entity<OrderDetail>()
+                .HasOne(od => od.Address)
+                .WithMany(a => a.OrderDetails)
+                .HasForeignKey(od => od.AddressId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // ExtraItem - OrderDetails
+            modelBuilder.Entity<OrderDetail>()
+                .HasOne(od => od.ExtraItem)
+                .WithMany(ei => ei.OrderDetails)
+                .HasForeignKey(od => od.ExtraItemId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Menu - OrderDetails
+            modelBuilder.Entity<OrderDetail>()
+                .HasOne(od => od.Menu)
+                .WithMany(m => m.OrderDetails)
+                .HasForeignKey(od => od.MenuId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Order - OrderDetails
+            modelBuilder.Entity<OrderDetail>()
+                .HasOne(od => od.Order)
+                .WithMany(o => o.OrderDetails)
+                .HasForeignKey(od => od.OrderId)
+                .OnDelete(DeleteBehavior.NoAction); // No cascade delete for Order
+
 
             // Admin kullanıcıyı ekleme
             modelBuilder.Entity<User>().HasData(
@@ -80,13 +111,7 @@ namespace DAL.Data
                 new MenuDetail { Id = 5, MenuId = 5, ExtraItemId = 5 }
             );
 
-            modelBuilder.Entity<Order>().HasData(
-                new Order { Id = 1, OrderSize = OrderSize.Large, Quantity = 2, AddressId = 1, MenuDetailId = 1, TotalPrice = 19.98 },
-                new Order { Id = 2, OrderSize = OrderSize.Medium, Quantity = 1, AddressId = 2, MenuDetailId = 2, TotalPrice = 12.99 },
-                new Order { Id = 3, OrderSize = OrderSize.Small, Quantity = 3, AddressId = 3, MenuDetailId = 3, TotalPrice = 32.97 },
-                new Order { Id = 4, OrderSize = OrderSize.Large, Quantity = 2, AddressId = 4, MenuDetailId = 4, TotalPrice = 15.98 },
-                new Order { Id = 5, OrderSize = OrderSize.Medium, Quantity = 1, AddressId = 5, MenuDetailId = 5, TotalPrice = 9.99 }
-            );
+
 
         }
 

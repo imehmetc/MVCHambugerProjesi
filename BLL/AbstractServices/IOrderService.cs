@@ -9,7 +9,8 @@ namespace BLL.AbstractServices
 {
     public interface IOrderService
     {
-        Task CreateNewOrder(OrderDto orderDto);
+        Task<OrderDto> CreateNewOrder(OrderDto orderDto);
+        Task CreateNewOrderDetail(OrderDetailDto orderDetailDto);
         Task<List<OrderDto>> GetAllOrders();
         Task<OrderDto> GetOrderById(int orderId);
         Task UpdateOrder(int orderId, OrderDto orderDto);

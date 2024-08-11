@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BLL.AbstractServices;
+using BLL.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using MVCHambugerProjesi.Models;
 using Newtonsoft.Json;
@@ -10,14 +11,20 @@ namespace MVCHambugerProjesi.Controllers
     {
         private readonly IUserService _userService;
         private readonly IOrderService _orderService;
+        private readonly IMenuService _menuService;
+        private readonly IExtraItemService _extraItemService;
         private readonly IMapper _mapper;
 
-        public OrderController(IUserService userService, IOrderService orderService, IMapper mapper)
+        public OrderController(IUserService userService, IOrderService orderService, IMenuService menuService, IExtraItemService extraItemService, IMapper mapper)
         {
             _userService = userService;
             _orderService = orderService;
+            _menuService = menuService;
+            _extraItemService = extraItemService;
             _mapper = mapper;
         }
+
+        [HttpPost]
         public async Task<IActionResult> Submit(string orderData)
         {
             var items = JsonConvert.DeserializeObject<List<ShoppingItem>>(orderData);
@@ -26,7 +33,7 @@ namespace MVCHambugerProjesi.Controllers
             double totalAmount = 0;
             foreach (var item in items)
             {
-                totalAmount += Convert.ToDouble(item.Price.Replace("₺","")); // ₺5.99
+                totalAmount += Convert.ToDouble(item.Price.Replace("₺", "")); // ₺5.99
             }
 
             ViewBag.TotalAmount = totalAmount;
@@ -39,8 +46,58 @@ namespace MVCHambugerProjesi.Controllers
             var userAddresses = userViewModel.AddressViewModels;
             ViewBag.UserAddresses = userAddresses;
 
+
+            TempData["OrderData"] = JsonConvert.SerializeObject(items);
+
             return View(items); // Order/Submit.cshtml adlı view'a yönlendir
         }
+        
+        [HttpPost]
+        public async Task<IActionResult> CreateOrder(int addressId, double totalPrice)
+        {
+            var orderData = TempData["OrderData"] as string;
+            var shoppingItems = JsonConvert.DeserializeObject<List<ShoppingItem>>(orderData);
 
+            int userAdressId = addressId;
+            int userId = HttpContext.Session.GetInt32("UserId").Value;
+
+            // Menü ve ekstra ürünleri ayır
+            var menuItem = shoppingItems.FirstOrDefault(x => x.Type == "Menu");
+            var extraItems = shoppingItems.Where(x => x.Type == "ExtraItem").ToList();
+
+            // Siparişi oluştur
+            var newOrder = new OrderViewModel()
+            {
+                TotalPrice = totalPrice,
+                UserId = userId,
+                OrderSize = DAL.Enums.OrderSize.Small
+            };
+
+            var createdOrder = await _orderService.CreateNewOrder(_mapper.Map<OrderDto>(newOrder));
+            int orderId = createdOrder.Id;
+
+            if (menuItem != null)
+            {
+                // Aynı Id'ye sahip ExtraItem'ları gruplandır
+                var groupedExtraItems = extraItems.GroupBy(x => x.Id);
+
+                foreach (var group in groupedExtraItems)
+                {
+                    var newOrderDetail = new OrderDetailViewModel()
+                    {
+                        OrderId = orderId,
+                        AddressId = addressId,
+                        ExtraItemId = group.Key,
+                        MenuId = menuItem.Id,
+                        Quantity = group.Count() // 
+                    };
+
+                    await _orderService.CreateNewOrderDetail(_mapper.Map<OrderDetailDto>(newOrderDetail));
+                }
+            }
+          
+
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

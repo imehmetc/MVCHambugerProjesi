@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAL.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,5 +18,6 @@ namespace BLL.Dtos
 
         // Relational Properties
         public List<MenuDetailDto> MenuDetailDtos { get; set; }
+        public List<OrderDetailDto> OrderDetailDtos { get; set; }
     }
 }

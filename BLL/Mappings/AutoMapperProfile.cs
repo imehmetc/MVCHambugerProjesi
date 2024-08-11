@@ -24,6 +24,7 @@ namespace BLL.Mappings
     .ReverseMap();
 
             CreateMap<ExtraItem, ExtraItemDto>().ReverseMap();
+            CreateMap<OrderDetail, OrderDetailDto>().ReverseMap();
         }
     }
 }

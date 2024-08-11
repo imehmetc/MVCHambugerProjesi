@@ -10,5 +10,6 @@ namespace MVCHambugerProjesi.Models
 
         // Relational Properties
         public List<MenuDetailViewModel> MenuDetailViewModels { get; set; }
+        public List<OrderDetailViewModel> OrderDetailViewModels { get; set; }
     }
 }

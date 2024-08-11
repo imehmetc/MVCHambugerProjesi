@@ -10,6 +10,5 @@ namespace MVCHambugerProjesi.Models
         // Relational Properties
         public ExtraItemViewModel ExtraItemViewModel { get; set; }
         public MenuViewModel MenuViewModel { get; set; }
-        public List<OrderViewModel> OrderViewModels { get; set; }
     }
 }

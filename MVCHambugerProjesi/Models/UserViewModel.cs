@@ -20,5 +20,6 @@ namespace MVCHambugerProjesi.Models
 
         // Relational Properties
         public List<AddressViewModel>? AddressViewModels { get; set; }
+        public List<OrderViewModel>? OrderViewModels { get; set; }
     }
 }

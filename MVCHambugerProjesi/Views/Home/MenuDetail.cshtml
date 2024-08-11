@@ -15,11 +15,13 @@
 
                     <div class="col-md-8">
                         <div class="card-body p-4">
+                            <p class="card-id" hidden>@Model.Id</p>
                             <h5 class="card-title text-primary">@Model.Name</h5>
                             <p class="card-text">
                                 @Model.Description
                             </p>
                             <p class="card-text card-price"><small class="text-muted">₺@Model.Price</small></p>
+                            <p class="menu-card" hidden>Menu</p>
                             <button class="btn btn-primary btn-add">Add</button>
                         </div>
                     </div>
@@ -38,13 +40,15 @@
 
                 @foreach (ExtraItemViewModel item in ViewBag.ExtraItems)
                 {
-                    <div class="card mb-3 mb-5" style="max-width: 840px;">
+                    <div class="card mb-3" style="max-width: 840px;">
                         <div class="row g-0 bg-light rounded">
                             <div class="col-md-8">
                                 <div class="card-body p-4">
+                                    <p class="card-id" hidden>@item.Id</p>
                                     <h5 class="card-title text-primary">@item.Name</h5>
 
                                     <p class="card-text card-price"><small class="text-muted">₺@item.AdditionalPrice</small></p>
+                                    <p class="extraItem-card" hidden>ExtraItem</p>
                                     <button class="btn btn-primary btn-add">Add</button>
                                 </div>
                             </div>
@@ -58,8 +62,8 @@
 
         </div>
 
-        <div class="col-md-4 border rounded bg-light mt-5 mb-5 shopping-cart-list">
-            <p class="fs-5 mt-3 text-center"><strong>Shopping Card</strong></p>
+        <div class="col-md-4 border rounded bg-light mt-5 mb-5 shopping-cart-list overflow-auto" style="height:350px;">
+            <p class="fs-5 mt-3 text-center"><strong>Sepetiniz</strong></p>
             <hr>
         </div>
     </div>

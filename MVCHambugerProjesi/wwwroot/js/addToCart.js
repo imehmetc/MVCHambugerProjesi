@@ -3,10 +3,12 @@ const btnAdd = document.getElementsByClassName("btn-add");
 const cartList = document.querySelector(".shopping-cart-list");
 
 class Shopping {
-    constructor(image, title, price) {
+    constructor(image, title, price, id, type) {
         this.image = image;
         this.title = title;
         this.price = price;
+        this.id = id;
+        this.type = type;
     }
 }
 class UI {
@@ -25,6 +27,8 @@ class UI {
                     </div>
                     <div class="col-md-2">
                         <div class="price" data-price="${shopping.price}">${shopping.price}</div>
+                    <p class="id" hidden>${shopping.id}</p>
+                    <p class="type" hidden>${shopping.type}</p>
                     </div>
                     <div class="col-md-2">
                         <button class="btn btn-delete text-danger">
@@ -74,7 +78,7 @@ class UI {
 
             totalAmountDiv.classList = "total-amount";
             totalAmountDiv.innerHTML =
-            `
+                `
                 <hr><h5 class="text-center text-primary">Total Amount: <p class="text-dark" style="display:inline;">₺${totalAmount}</p></h5>
                 <button class="btn btn-delete text-danger btn-order"><i class="bi bi-arrow-up-right-square-fill"></i>Sipariş Ver</button>
             `;
@@ -95,18 +99,41 @@ class UI {
                     let item = listItems[i];
                     let title = item.querySelector(".title").textContent;
                     let price = item.querySelector(".price").textContent;
+                    let id = item.querySelector(".id").textContent;
+                    let type = item.querySelector(".type").textContent;
                     let image = item.querySelector("img").src;
-                    items.push({ title: title, price: price, image: image });
+                    items.push({ title: title, price: price, image: image, id: id, type: type });
                 }
 
-                // Toplanan verileri JSON formatında bir formda gönderme
+                if (!items.some(item => item.type === "Menu")) {
+                    
+                    // Mevcut bir alert div varsa kaldır
+                    let existingAlertDiv = document.querySelector(".alert");
+                    if (existingAlertDiv) {
+                        existingAlertDiv.remove();
+                    }
+
+                    // Sepetin içinde Menü eklenmemişse uyarı ver. 
+                    let alertDiv = document.createElement("div");
+                    alertDiv.className = "alert alert-danger mt-3";
+                    alertDiv.role = "alert";
+                    alertDiv.innerHTML = "Menüyü eklemeden sipariş veremezsiniz.";
+
+                    // Uyarı mesajını belirtilen div'den sonra ekle
+                    let cartDiv = document.querySelector(".btn-order");
+                    cartDiv.parentNode.insertBefore(alertDiv, cartDiv.nextSibling);
+
+                    return; // Metodu kırıp formun gönderilmesini engelle.
+                }
+
+                // Verileri JSON formatında OrderController / Submit action'una gönderir
                 let form = document.createElement("form");
                 form.method = "POST";
-                form.action = "/Order/Submit"; // Siparişlerin gönderileceği sayfa
+                form.action = "/Order/Submit"; // Gidecek controller ve action
 
                 let input = document.createElement("input");
                 input.type = "hidden";
-                input.name = "orderData";
+                input.name = "orderData"; // action'un parametresine gider.
                 input.value = JSON.stringify(items);
                 form.appendChild(input);
 
@@ -125,11 +152,28 @@ class UI {
 
 for (let i = 0; i < btnAdd.length; i++) {
     btnAdd[i].addEventListener("click", function (event) {
+        let elements = card[i].getElementsByTagName("p");
+        let type;
+
+        // elements HTMLCollection olduğundan, döngü ile kontrol edilir
+        for (let j = 0; j < elements.length; j++) {
+            let element = elements[j];
+
+            if (element.classList.contains("menu-card")) {
+                type = element.textContent;
+                break; // uygun sınıf bulundu, döngüden çık
+            } else if (element.classList.contains("extraItem-card")) {
+                type = element.textContent;
+                break; // uygun sınıf bulundu, döngüden çık
+            }
+        }
+
         let title = card[i].getElementsByClassName("card-title")[0].textContent;
         let price = card[i].getElementsByClassName("card-price")[0].textContent;
+        let id = card[i].getElementsByClassName("card-id")[0].textContent;
         let image = card[i].getElementsByClassName("card-image")[0].src;
 
-        let shopping = new Shopping(image, title, price);
+        let shopping = new Shopping(image, title, price, id, type);
 
         let ui = new UI();
 

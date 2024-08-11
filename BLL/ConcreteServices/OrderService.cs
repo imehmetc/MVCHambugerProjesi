@@ -16,21 +16,27 @@ namespace BLL.ConcreteServices
     {
         private readonly IRepository<Order> _orderRepository;
         private readonly IRepository<Menu> _menuRepository;
+        private readonly IRepository<OrderDetail> _orderDetailRepository;
         private readonly IMapper _mapper;
 
-        public OrderService(IRepository<Order> orderRepository,IRepository<Menu> menuRepository, IMapper mapper)
+        public OrderService(IRepository<Order> orderRepository,IRepository<Menu> menuRepository, IRepository<OrderDetail> orderDetailRepository, IMapper mapper)
         {
             _orderRepository = orderRepository;
             _menuRepository = menuRepository;
+            _orderDetailRepository = orderDetailRepository;
             _mapper = mapper;
         }
-        public async Task CreateNewOrder(OrderDto orderDto) // Order > MenuDetail > Menu.Price ulaşmam gerekli (ThenInclude)
+        public async Task<OrderDto> CreateNewOrder(OrderDto orderDto) 
         {
-            var menu = await _menuRepository.GetByIdAsync(orderDto.MenuDetailId);
+            var order = _mapper.Map<Order>(orderDto);
+            await _orderRepository.AddAsync(order);
+            return _mapper.Map<OrderDto>(order);
 
-            orderDto.TotalPrice = orderDto.Quantity * menu.Price;
+        }
 
-            await _orderRepository.AddAsync(_mapper.Map<Order>(orderDto));
+        public async Task CreateNewOrderDetail(OrderDetailDto orderDetailDto)
+        {
+            await _orderDetailRepository.AddAsync(_mapper.Map<OrderDetail>(orderDetailDto));
         }
 
         public Task DeleteOrder(int orderId)
