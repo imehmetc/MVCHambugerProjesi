@@ -56,7 +56,7 @@ class UI {
         let cartListItem = cartList.getElementsByClassName("list-item");
         let itemCount = document.getElementById("item-count");
         if (itemCount) {
-            itemCount.innerHTML = cartListItem.length;
+            itemCount.textContent = `(${cartListItem.length})`;
         }
     }
 
@@ -105,7 +105,7 @@ class UI {
                     items.push({ title: title, price: price, image: image, id: id, type: type });
                 }
 
-                if (!items.some(item => item.type === "Menu")) {
+                if (!items.some(item => item.type.trim() === "Menu")) {
                     
                     // Mevcut bir alert div varsa kaldır
                     let existingAlertDiv = document.querySelector(".alert");

@@ -1,0 +1,42 @@
+﻿@model ExtraItemViewModel
+
+<div class="container mt-3">
+    <h1>Add New Extra Item</h1>
+    <form asp-controller="Admin" asp-action="AddNewExtraItem" method="post" >
+        <div class="form-group">
+            <label for="Name">Extra Item Name</label>
+            <span style="color: red !important; display: inline; float: none;">*</span>
+            <input type="text" id="Name" name="Name" class="form-control" placeholder="Extra Item Name" asp-for="Name" required />
+        </div>
+
+        <div class="form-group">
+            <label for="AdditionalPrice">AdditionalPrice</label>
+            <span style="color: red !important; display: inline; float: none;">*</span>
+            <input type="text" id="AdditionalPrice" name="AdditionalPrice" class="form-control" placeholder="Additional Price" asp-for="AdditionalPrice" required></input>
+        </div>
+
+        @{
+            var menus = ViewBag.Menus as List<MenuViewModel>;
+        }
+
+        @if (menus != null && menus.Count > 0)
+        {
+            <div class="form-group">
+                <label for="menuId">Select Menu</label>
+                <span style="color: red !important; display: inline; float: none;">*</span>
+                <select id="menuId" name="menuId" class="form-control">
+                    @foreach (var menu in menus)
+                    {
+                        <option value="@menu.Id">@menu.Name</option>
+                    }
+                </select>
+            </div>
+        }
+      
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a asp-action="Index" asp-controller="Home" class="btn btn-secondary">Back</a>
+        </div>
+    </form>
+</div>

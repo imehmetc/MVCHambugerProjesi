@@ -89,7 +89,7 @@ namespace MVCHambugerProjesi.Controllers
                         AddressId = addressId,
                         ExtraItemId = group.Key,
                         MenuId = menuItem.Id,
-                        Quantity = group.Count() // 
+                        Quantity = group.Count()
                     };
 
                     await _orderService.CreateNewOrderDetail(_mapper.Map<OrderDetailDto>(newOrderDetail));

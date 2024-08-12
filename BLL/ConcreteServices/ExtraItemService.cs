@@ -21,15 +21,17 @@ namespace BLL.ConcreteServices
             _extraItemRepository = extraItemRepository;
             _mapper = mapper;
         }
-
-        public async Task AddExtraItem(ExtraItemDto extraItemDto)
+        public async Task<ExtraItemDto> AddExtraItem(ExtraItemDto extraItemDto)
         {
-            if (extraItemDto != null)
-            {
-                var extraItem = _mapper.Map<ExtraItem>(extraItemDto);
-                await _extraItemRepository.AddAsync(extraItem);
-            }
+            var extraItem = _mapper.Map<ExtraItem>(extraItemDto);
+            await _extraItemRepository.AddAsync(extraItem);
+            await _extraItemRepository.SaveChangesAsync();
+
+            // Eklenen ExtraItem'ı geri döndür
+            return _mapper.Map<ExtraItemDto>(extraItem);
         }
+
+
 
         public async Task DeleteExtraItem(int extraItemId)
         {

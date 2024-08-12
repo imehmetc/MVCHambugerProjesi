@@ -52,6 +52,8 @@ namespace MVCHambugerProjesi.Controllers
             {
                 var menuDtos = await _menuService.GetAllMenus();
                 var menuDto1 = menuDtos.FirstOrDefault(x => x.Id == id);
+                menuDto1.ViewCount++;
+                await _menuService.UpdateMenuViewCount(menuDto1.Id);
 
                 var result1 = _mapper.Map<MenuViewModel>(menuDto1);
 

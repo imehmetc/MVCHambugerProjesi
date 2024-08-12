@@ -9,7 +9,7 @@ namespace BLL.AbstractServices
 {
     public interface IExtraItemService
     {
-        Task AddExtraItem(ExtraItemDto extraItemDto);
+        Task<ExtraItemDto> AddExtraItem(ExtraItemDto extraItemDto);
         Task RemoveExtraItem(int extraItemId);
         Task DeleteExtraItem(int extraItemId);
         Task<List<ExtraItemDto>> GetAllExtraItems();

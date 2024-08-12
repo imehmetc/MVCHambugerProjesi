@@ -29,14 +29,9 @@ namespace BLL.ConcreteServices
 
         public async Task AddMenuDetail(int extraItemId, int menuId)
         {
-            var extraItem = _extraItemRepository.GetByIdAsync(extraItemId);
-            var menu = _menuRepository.GetByIdAsync(menuId);
-
             var menuDetail = new MenuDetailDto()
             {
-                MenuDto = _mapper.Map<MenuDto>(menu),
                 MenuId = menuId,
-                ExtraItemDto = _mapper.Map<ExtraItemDto>(extraItem),
                 ExtraItemId = extraItemId
             };
 
