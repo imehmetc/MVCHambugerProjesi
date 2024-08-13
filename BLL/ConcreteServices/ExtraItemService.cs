@@ -3,9 +3,11 @@ using BLL.AbstractServices;
 using BLL.Dtos;
 using DAL.AbstractRepositories;
 using DAL.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -42,6 +44,12 @@ namespace BLL.ConcreteServices
         public async Task<List<ExtraItemDto>> GetAllExtraItems()
         {
             var extraItems = await _extraItemRepository.GetAllAsync();
+            return _mapper.Map<List<ExtraItemDto>>(extraItems);
+        }
+
+        public async Task<List<ExtraItemDto>> GetAllExtraItemsWithIncludes()
+        {
+            var extraItems = await _extraItemRepository.GetAllWithIncludes(x => x.MenuDetails).ToListAsync();
             return _mapper.Map<List<ExtraItemDto>>(extraItems);
         }
 

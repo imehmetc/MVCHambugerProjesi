@@ -4,6 +4,7 @@ using DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240813192343_third")]
+    partial class third
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -72,7 +75,7 @@ namespace DAL.Migrations
                             Id = 1,
                             City = "New York",
                             Country = "USA",
-                            CreatedDate = new DateTime(2024, 8, 13, 22, 27, 0, 385, DateTimeKind.Local).AddTicks(1308),
+                            CreatedDate = new DateTime(2024, 8, 13, 22, 23, 42, 89, DateTimeKind.Local).AddTicks(8399),
                             FullAddress = "123 Main St",
                             IsDeleted = false,
                             PostalCode = 10001,
@@ -83,7 +86,7 @@ namespace DAL.Migrations
                             Id = 2,
                             City = "Los Angeles",
                             Country = "USA",
-                            CreatedDate = new DateTime(2024, 8, 13, 22, 27, 0, 385, DateTimeKind.Local).AddTicks(1319),
+                            CreatedDate = new DateTime(2024, 8, 13, 22, 23, 42, 89, DateTimeKind.Local).AddTicks(8404),
                             FullAddress = "456 Elm St",
                             IsDeleted = false,
                             PostalCode = 90001,
@@ -94,7 +97,7 @@ namespace DAL.Migrations
                             Id = 3,
                             City = "Chicago",
                             Country = "USA",
-                            CreatedDate = new DateTime(2024, 8, 13, 22, 27, 0, 385, DateTimeKind.Local).AddTicks(1324),
+                            CreatedDate = new DateTime(2024, 8, 13, 22, 23, 42, 89, DateTimeKind.Local).AddTicks(8407),
                             FullAddress = "789 Pine St",
                             IsDeleted = false,
                             PostalCode = 60007,
@@ -105,7 +108,7 @@ namespace DAL.Migrations
                             Id = 4,
                             City = "Houston",
                             Country = "USA",
-                            CreatedDate = new DateTime(2024, 8, 13, 22, 27, 0, 385, DateTimeKind.Local).AddTicks(1328),
+                            CreatedDate = new DateTime(2024, 8, 13, 22, 23, 42, 89, DateTimeKind.Local).AddTicks(8410),
                             FullAddress = "321 Oak St",
                             IsDeleted = false,
                             PostalCode = 77001,
@@ -116,7 +119,7 @@ namespace DAL.Migrations
                             Id = 5,
                             City = "Phoenix",
                             Country = "USA",
-                            CreatedDate = new DateTime(2024, 8, 13, 22, 27, 0, 385, DateTimeKind.Local).AddTicks(1333),
+                            CreatedDate = new DateTime(2024, 8, 13, 22, 23, 42, 89, DateTimeKind.Local).AddTicks(8414),
                             FullAddress = "654 Maple St",
                             IsDeleted = false,
                             PostalCode = 85001,
@@ -160,7 +163,7 @@ namespace DAL.Migrations
                         {
                             Id = 1,
                             AdditionalPrice = 1.0,
-                            CreatedDate = new DateTime(2024, 8, 13, 22, 27, 0, 385, DateTimeKind.Local).AddTicks(1443),
+                            CreatedDate = new DateTime(2024, 8, 13, 22, 23, 42, 89, DateTimeKind.Local).AddTicks(8474),
                             IsDeleted = false,
                             Name = "Cheese"
                         },
@@ -168,7 +171,7 @@ namespace DAL.Migrations
                         {
                             Id = 2,
                             AdditionalPrice = 1.5,
-                            CreatedDate = new DateTime(2024, 8, 13, 22, 27, 0, 385, DateTimeKind.Local).AddTicks(1447),
+                            CreatedDate = new DateTime(2024, 8, 13, 22, 23, 42, 89, DateTimeKind.Local).AddTicks(8478),
                             IsDeleted = false,
                             Name = "Bacon"
                         },
@@ -176,7 +179,7 @@ namespace DAL.Migrations
                         {
                             Id = 3,
                             AdditionalPrice = 1.25,
-                            CreatedDate = new DateTime(2024, 8, 13, 22, 27, 0, 385, DateTimeKind.Local).AddTicks(1451),
+                            CreatedDate = new DateTime(2024, 8, 13, 22, 23, 42, 89, DateTimeKind.Local).AddTicks(8480),
                             IsDeleted = false,
                             Name = "Mushrooms"
                         },
@@ -184,7 +187,7 @@ namespace DAL.Migrations
                         {
                             Id = 4,
                             AdditionalPrice = 2.0,
-                            CreatedDate = new DateTime(2024, 8, 13, 22, 27, 0, 385, DateTimeKind.Local).AddTicks(1455),
+                            CreatedDate = new DateTime(2024, 8, 13, 22, 23, 42, 89, DateTimeKind.Local).AddTicks(8482),
                             IsDeleted = false,
                             Name = "Avocado"
                         },
@@ -192,7 +195,7 @@ namespace DAL.Migrations
                         {
                             Id = 5,
                             AdditionalPrice = 0.75,
-                            CreatedDate = new DateTime(2024, 8, 13, 22, 27, 0, 385, DateTimeKind.Local).AddTicks(1458),
+                            CreatedDate = new DateTime(2024, 8, 13, 22, 23, 42, 89, DateTimeKind.Local).AddTicks(8485),
                             IsDeleted = false,
                             Name = "Onions"
                         });
@@ -246,7 +249,7 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2024, 8, 13, 22, 27, 0, 385, DateTimeKind.Local).AddTicks(1570),
+                            CreatedDate = new DateTime(2024, 8, 13, 22, 23, 42, 89, DateTimeKind.Local).AddTicks(8547),
                             Description = "Juicy beef burger",
                             IsDeleted = false,
                             Name = "Burger",
@@ -257,7 +260,7 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2024, 8, 13, 22, 27, 0, 385, DateTimeKind.Local).AddTicks(1578),
+                            CreatedDate = new DateTime(2024, 8, 13, 22, 23, 42, 89, DateTimeKind.Local).AddTicks(8551),
                             Description = "Cheese and pepperoni",
                             IsDeleted = false,
                             Name = "Pizza",
@@ -268,7 +271,7 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2024, 8, 13, 22, 27, 0, 385, DateTimeKind.Local).AddTicks(1583),
+                            CreatedDate = new DateTime(2024, 8, 13, 22, 23, 42, 89, DateTimeKind.Local).AddTicks(8554),
                             Description = "Creamy Alfredo pasta",
                             IsDeleted = false,
                             Name = "Pasta",
@@ -279,7 +282,7 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2024, 8, 13, 22, 27, 0, 385, DateTimeKind.Local).AddTicks(1587),
+                            CreatedDate = new DateTime(2024, 8, 13, 22, 23, 42, 89, DateTimeKind.Local).AddTicks(8557),
                             Description = "Fresh garden salad",
                             IsDeleted = false,
                             Name = "Salad",
@@ -290,7 +293,7 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedDate = new DateTime(2024, 8, 13, 22, 27, 0, 385, DateTimeKind.Local).AddTicks(1591),
+                            CreatedDate = new DateTime(2024, 8, 13, 22, 23, 42, 89, DateTimeKind.Local).AddTicks(8560),
                             Description = "Spicy chicken tacos",
                             IsDeleted = false,
                             Name = "Tacos",
@@ -338,7 +341,7 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2024, 8, 13, 22, 27, 0, 385, DateTimeKind.Local).AddTicks(1977),
+                            CreatedDate = new DateTime(2024, 8, 13, 22, 23, 42, 89, DateTimeKind.Local).AddTicks(8618),
                             ExtraItemId = 1,
                             IsDeleted = false,
                             MenuId = 1
@@ -346,7 +349,7 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2024, 8, 13, 22, 27, 0, 385, DateTimeKind.Local).AddTicks(1985),
+                            CreatedDate = new DateTime(2024, 8, 13, 22, 23, 42, 89, DateTimeKind.Local).AddTicks(8622),
                             ExtraItemId = 2,
                             IsDeleted = false,
                             MenuId = 2
@@ -354,7 +357,7 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2024, 8, 13, 22, 27, 0, 385, DateTimeKind.Local).AddTicks(1989),
+                            CreatedDate = new DateTime(2024, 8, 13, 22, 23, 42, 89, DateTimeKind.Local).AddTicks(8624),
                             ExtraItemId = 3,
                             IsDeleted = false,
                             MenuId = 3
@@ -362,7 +365,7 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2024, 8, 13, 22, 27, 0, 385, DateTimeKind.Local).AddTicks(1993),
+                            CreatedDate = new DateTime(2024, 8, 13, 22, 23, 42, 89, DateTimeKind.Local).AddTicks(8627),
                             ExtraItemId = 4,
                             IsDeleted = false,
                             MenuId = 4
@@ -370,7 +373,7 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedDate = new DateTime(2024, 8, 13, 22, 27, 0, 385, DateTimeKind.Local).AddTicks(1997),
+                            CreatedDate = new DateTime(2024, 8, 13, 22, 23, 42, 89, DateTimeKind.Local).AddTicks(8629),
                             ExtraItemId = 5,
                             IsDeleted = false,
                             MenuId = 5
@@ -436,7 +439,7 @@ namespace DAL.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ExtraItemId")
+                    b.Property<int>("ExtraItemId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
@@ -448,7 +451,7 @@ namespace DAL.Migrations
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("OrderId")
+                    b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
@@ -525,7 +528,7 @@ namespace DAL.Migrations
                         {
                             Id = 1,
                             BirthDate = new DateTime(1980, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedDate = new DateTime(2024, 8, 13, 22, 27, 0, 385, DateTimeKind.Local).AddTicks(394),
+                            CreatedDate = new DateTime(2024, 8, 13, 22, 23, 42, 89, DateTimeKind.Local).AddTicks(7852),
                             Email = "admin@example.com",
                             FirstName = "Admin",
                             IsAdmin = true,
@@ -538,7 +541,7 @@ namespace DAL.Migrations
                         {
                             Id = 2,
                             BirthDate = new DateTime(1990, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedDate = new DateTime(2024, 8, 13, 22, 27, 0, 385, DateTimeKind.Local).AddTicks(398),
+                            CreatedDate = new DateTime(2024, 8, 13, 22, 23, 42, 89, DateTimeKind.Local).AddTicks(7855),
                             Email = "john@example.com",
                             FirstName = "John",
                             IsAdmin = false,
@@ -551,7 +554,7 @@ namespace DAL.Migrations
                         {
                             Id = 3,
                             BirthDate = new DateTime(1985, 7, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedDate = new DateTime(2024, 8, 13, 22, 27, 0, 385, DateTimeKind.Local).AddTicks(405),
+                            CreatedDate = new DateTime(2024, 8, 13, 22, 23, 42, 89, DateTimeKind.Local).AddTicks(7949),
                             Email = "jane@example.com",
                             FirstName = "Jane",
                             IsAdmin = false,
@@ -564,7 +567,7 @@ namespace DAL.Migrations
                         {
                             Id = 4,
                             BirthDate = new DateTime(1975, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedDate = new DateTime(2024, 8, 13, 22, 27, 0, 385, DateTimeKind.Local).AddTicks(411),
+                            CreatedDate = new DateTime(2024, 8, 13, 22, 23, 42, 89, DateTimeKind.Local).AddTicks(7953),
                             Email = "michael@example.com",
                             FirstName = "Michael",
                             IsAdmin = false,
@@ -577,7 +580,7 @@ namespace DAL.Migrations
                         {
                             Id = 5,
                             BirthDate = new DateTime(1995, 8, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedDate = new DateTime(2024, 8, 13, 22, 27, 0, 385, DateTimeKind.Local).AddTicks(417),
+                            CreatedDate = new DateTime(2024, 8, 13, 22, 23, 42, 89, DateTimeKind.Local).AddTicks(7957),
                             Email = "emily@example.com",
                             FirstName = "Emily",
                             IsAdmin = false,
@@ -638,7 +641,8 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Entities.ExtraItem", "ExtraItem")
                         .WithMany("OrderDetails")
                         .HasForeignKey("ExtraItemId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DAL.Entities.Menu", "Menu")
                         .WithMany("OrderDetails")
@@ -649,8 +653,7 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Entities.Order", "Order")
                         .WithMany("OrderDetails")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Address");
 

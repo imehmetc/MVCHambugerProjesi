@@ -13,6 +13,7 @@ namespace BLL.AbstractServices
         Task RemoveExtraItem(int extraItemId);
         Task DeleteExtraItem(int extraItemId);
         Task<List<ExtraItemDto>> GetAllExtraItems();
+        Task<List<ExtraItemDto>> GetAllExtraItemsWithIncludes();
         Task UpdateExtraItem(int extraItemId, ExtraItemDto extraItemDto);
     }
 }

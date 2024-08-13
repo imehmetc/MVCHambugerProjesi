@@ -49,10 +49,29 @@ namespace DAL.ConcreteRepositories
             if (entity != null)
             {
                 entity.DeletedDate = DateTime.Now;
+                entity.IsDeleted = true;
                 _entities.Update(entity);
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task DeleteRangeAsync(IEnumerable<int> ids)
+        {
+            var entities = await _entities.Where(e => ids.Contains(e.Id)).ToListAsync();
+
+            if (entities != null && entities.Any())
+            {
+                foreach (var entity in entities)
+                {
+                    entity.DeletedDate = DateTime.Now;
+                    entity.IsDeleted = true;
+                }
+
+                _entities.UpdateRange(entities);
+                await _context.SaveChangesAsync();
+            }
+        }
+
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
@@ -63,7 +82,7 @@ namespace DAL.ConcreteRepositories
 
         public IQueryable<T> GetAllWithIncludes(params Expression<Func<T, object>>[] includes)
         {
-            IQueryable<T> query = _entities;
+            IQueryable<T> query = _entities.Where(x => !x.IsDeleted);
 
             foreach (var item in includes)
             {

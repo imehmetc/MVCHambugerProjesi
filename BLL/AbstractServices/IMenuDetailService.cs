@@ -13,5 +13,6 @@ namespace BLL.AbstractServices
         Task<List<MenuDetailDto>> GettAllMenuDetails();
         Task DeleteMenuDetail(int menuDetailId);
         Task RemoveMenuDetail(int menuDetailId);
+        Task DeleteRangeAsync(IEnumerable<int> ids);
     }
 }

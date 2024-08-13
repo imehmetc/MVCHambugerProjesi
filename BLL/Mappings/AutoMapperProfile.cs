@@ -23,8 +23,13 @@ namespace BLL.Mappings
     .ForMember(dest => dest.ExtraItemDto, opt => opt.MapFrom(src => src.ExtraItem))
     .ReverseMap();
 
-            CreateMap<ExtraItem, ExtraItemDto>().ReverseMap();
-            CreateMap<OrderDetail, OrderDetailDto>().ReverseMap();
+            CreateMap<ExtraItem, ExtraItemDto>().ForMember(a => a.MenuDetailDtos, x => x.MapFrom(w => w.MenuDetails)).ReverseMap();
+            CreateMap<OrderDetail, OrderDetailDto>()
+                .ForMember(dest => dest.AddressDto, opt => opt.MapFrom(src => src.Address))
+                .ForMember(dest => dest.ExtraItemDto, opt => opt.MapFrom(src => src.ExtraItem))
+                .ForMember(dest => dest.MenuDto, opt => opt.MapFrom(src => src.Menu))
+                .ForMember(dest => dest.OrderDto, opt => opt.MapFrom(src => src.Order))
+                .ReverseMap();
         }
     }
 }

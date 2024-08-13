@@ -18,8 +18,13 @@ namespace MVCHambugerProjesi.Mappings
     .ForMember(dest => dest.ExtraItemViewModel, opt => opt.MapFrom(src => src.ExtraItemDto))
     .ReverseMap();
 
-            CreateMap<ExtraItemDto, ExtraItemViewModel>().ReverseMap();
-            CreateMap<OrderDetailDto, OrderDetailViewModel>().ReverseMap();
+            CreateMap<ExtraItemDto, ExtraItemViewModel>().ForMember(a => a.MenuDetailViewModels, x => x.MapFrom(w => w.MenuDetailDtos)).ReverseMap();
+            CreateMap<OrderDetailDto, OrderDetailViewModel>()
+     .ForMember(dest => dest.AddressViewModel, opt => opt.MapFrom(src => src.AddressDto))
+     .ForMember(dest => dest.ExtraItemViewModel, opt => opt.MapFrom(src => src.ExtraItemDto))
+     .ForMember(dest => dest.MenuViewModel, opt => opt.MapFrom(src => src.MenuDto))
+     .ForMember(dest => dest.OrderViewModel, opt => opt.MapFrom(src => src.OrderDto))
+     .ReverseMap();
         }
     }
 }

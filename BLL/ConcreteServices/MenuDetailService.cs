@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -44,13 +45,17 @@ namespace BLL.ConcreteServices
                 await _menuDetailService.DeleteAsync(menuDetailId);
         }
 
+        public async Task DeleteRangeAsync(IEnumerable<int> ids)
+        {
+            await _menuDetailService.DeleteRangeAsync(ids);
+        }
+
         public async Task<List<MenuDetailDto>> GettAllMenuDetails()
         {
             var menuDetails = await _menuDetailService.GetAllWithIncludes(x => x.Menu, x => x.ExtraItem).ToListAsync();
             
             return _mapper.Map<List<MenuDetailDto>>(menuDetails);
         }
-
         public async Task RemoveMenuDetail(int menuDetailId)
         {
             if (menuDetailId != null)

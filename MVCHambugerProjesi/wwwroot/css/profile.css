@@ -96,3 +96,39 @@
     .custom-post-button i {
         margin-right: 8px; /* İkon ve yazı arasındaki boşluk */
     }
+
+
+.order-history {
+    margin-top: 30px;
+}
+
+    .order-history h4 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .order-history .table-responsive {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .order-history table {
+        margin-bottom: 0;
+    }
+
+    .order-history thead {
+        background-color: #343a40;
+        color: #fff;
+    }
+
+    .order-history th, .order-history td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .order-history .btn-sm {
+        padding: 5px 10px;
+        font-size: 0.875rem;
+    }

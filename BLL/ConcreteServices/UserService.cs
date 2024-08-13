@@ -44,7 +44,6 @@ namespace BLL.ConcreteServices
 
             return _mapper.Map<UserDto>(user);
         }
-
         public async Task<UserDto> Login(string username, string password)
         {
             var users = await _userRepository.GetAllAsync();

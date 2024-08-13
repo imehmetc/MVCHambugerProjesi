@@ -5,7 +5,7 @@ namespace MVCHambugerProjesi.Models
     public class OrderDetailViewModel : BaseViewModel
     {
         public int AddressId { get; set; }
-        public int ExtraItemId { get; set; }
+        public int? ExtraItemId { get; set; }
         public int MenuId { get; set; }
         public int OrderId { get; set; }
         public int Quantity { get; set; }

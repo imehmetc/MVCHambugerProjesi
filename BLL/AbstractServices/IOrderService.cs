@@ -16,6 +16,7 @@ namespace BLL.AbstractServices
         Task UpdateOrder(int orderId, OrderDto orderDto);
         Task DeleteOrder(int orderId);
         Task RemoveOrder(int orderId);
-        Task<List<OrderDto>> GetUserOrders(int userId);
+        List<OrderDto> GetUserOrders(int userId);
+        List<OrderDetailDto> GetAllOrderDetailsWithIncludes();
     }
 }

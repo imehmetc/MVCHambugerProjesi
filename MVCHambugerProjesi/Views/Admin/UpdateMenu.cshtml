@@ -1,0 +1,72 @@
+﻿@model MenuViewModel
+
+@{
+    ViewBag.Title = "Update Menu";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Update Menu</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form asp-action="UpdateMenu" asp-controller="Admin" method="post" enctype="multipart/form-data">
+                <div class="form-group mb-3">
+                    <label for="Name">Menu Name</label>
+                    <input type="text" class="form-control" id="Name" name="Name" value="@Model.Name" required>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="Price">Price</label>
+                    <input type="number" step="0.01" class="form-control" id="Price" name="Price" value="@Model.Price" required>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="Description">Description</label>
+                    <textarea class="form-control" id="Description" name="Description" rows="4" required>@Model.Description</textarea>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="Photo">Menu Photo</label>
+                    <input type="file" class="form-control-file" id="Photo" name="PhotoUrl">
+                    @if (!string.IsNullOrEmpty(Model.Photo))
+                    {
+                        <img src="~/img/@Model.Photo" alt="Menu Photo" class="img-thumbnail mt-3" style="max-width: 200px;">
+                    }
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="OrderCount">Order Count</label>
+                    <input type="number" class="form-control" id="OrderCount" name="OrderCount" value="@Model.OrderCount" readonly>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="ViewCount">View Count</label>
+                    <input type="number" class="form-control" id="ViewCount" name="ViewCount" value="@Model.ViewCount" readonly>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Update Menu</button>
+                    <a asp-action="MenuAndExtraItemList" asp-controller="Admin" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    h2 {
+        color: #343a40;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .btn-primary {
+        width: 150px;
+    }
+
+    .btn-secondary {
+        width: 150px;
+        margin-left: 10px;
+    }
+</style>

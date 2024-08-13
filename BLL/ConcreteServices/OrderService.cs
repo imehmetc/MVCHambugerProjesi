@@ -3,6 +3,7 @@ using BLL.AbstractServices;
 using BLL.Dtos;
 using DAL.AbstractRepositories;
 using DAL.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,14 +20,14 @@ namespace BLL.ConcreteServices
         private readonly IRepository<OrderDetail> _orderDetailRepository;
         private readonly IMapper _mapper;
 
-        public OrderService(IRepository<Order> orderRepository,IRepository<Menu> menuRepository, IRepository<OrderDetail> orderDetailRepository, IMapper mapper)
+        public OrderService(IRepository<Order> orderRepository, IRepository<Menu> menuRepository, IRepository<OrderDetail> orderDetailRepository, IMapper mapper)
         {
             _orderRepository = orderRepository;
             _menuRepository = menuRepository;
             _orderDetailRepository = orderDetailRepository;
             _mapper = mapper;
         }
-        public async Task<OrderDto> CreateNewOrder(OrderDto orderDto) 
+        public async Task<OrderDto> CreateNewOrder(OrderDto orderDto)
         {
             var order = _mapper.Map<Order>(orderDto);
             await _orderRepository.AddAsync(order);
@@ -48,15 +49,25 @@ namespace BLL.ConcreteServices
         {
             throw new NotImplementedException();
         }
+        public List<OrderDetailDto> GetAllOrderDetailsWithIncludes()
+        {
+            var orderDetails = _orderDetailRepository.GetAllWithIncludes(x => x.Menu, x => x.Order, x => x.Address, x => x.ExtraItem).ToList();
+            var orderDetailDtos = _mapper.Map<List<OrderDetailDto>>(orderDetails);
+            return orderDetailDtos;
+        }
 
         public Task<OrderDto> GetOrderById(int orderId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<OrderDto>> GetUserOrders(int userId)
+        public List<OrderDto> GetUserOrders(int userId)
         {
-            throw new NotImplementedException();
+            var orders = _orderRepository.GetAllWithIncludes(x => x.User).ToList();
+            var userOrders = orders.Where(x => x.User.Id == userId).ToList();
+
+            var userOderDtos = _mapper.Map<List<OrderDto>>(userOrders);
+            return userOderDtos;
         }
 
         public Task RemoveOrder(int orderId)

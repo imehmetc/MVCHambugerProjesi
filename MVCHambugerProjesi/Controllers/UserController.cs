@@ -10,11 +10,13 @@ namespace MVCHambugerProjesi.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;
+        private readonly IOrderService _orderService;
         private readonly IMapper _mapper;
 
-        public UserController(IUserService userService, IMapper mapper)
+        public UserController(IUserService userService, IOrderService orderService, IMapper mapper)
         {
             _userService = userService;
+            _orderService = orderService;
             _mapper = mapper;
         }
 
@@ -27,7 +29,7 @@ namespace MVCHambugerProjesi.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(string userName, string password)
         {
-            var userDto =  await _userService.Login(userName, Sha256Hasher.ComputeSha256Hash(password));
+            var userDto = await _userService.Login(userName, Sha256Hasher.ComputeSha256Hash(password));
             if (userDto != null)
             {
                 var userViewModel = _mapper.Map<UserViewModel>(userDto);
@@ -73,7 +75,7 @@ namespace MVCHambugerProjesi.Controllers
             {
                 var users = await _userService.GetAllUsers();
                 var existingUser = users.FirstOrDefault(x => x.Username == userViewModel.Username || x.Email == userViewModel.Email);
-                
+
                 // Username ve Email kontrolü
                 if (existingUser != null)
                 {
@@ -117,7 +119,7 @@ namespace MVCHambugerProjesi.Controllers
 
                 // Password hash
                 userViewModel.Password = Sha256Hasher.ComputeSha256Hash(userViewModel.Password);
-                
+
                 var userDto = _mapper.Map<UserDto>(userViewModel);
                 await _userService.Register(userDto);
                 return RedirectToAction("Login");
@@ -152,6 +154,11 @@ namespace MVCHambugerProjesi.Controllers
             var mappedUser = _mapper.Map<UserViewModel>(user);
 
 
+            // User Orders
+            var userOrderDtos = _orderService.GetUserOrders(id);
+            var userOrderViewModels = _mapper.Map<List<OrderViewModel>>(userOrderDtos);
+            ViewBag.UserOrders = userOrderViewModels;
+
             return View(mappedUser);
         }
 
@@ -165,7 +172,7 @@ namespace MVCHambugerProjesi.Controllers
             var userViewModel = _mapper.Map<UserViewModel>(user);
 
             return View(userViewModel);
-            
+
         }
 
         [HttpPost] // Tracker hatası veriyor.

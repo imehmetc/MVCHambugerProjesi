@@ -73,31 +73,66 @@ namespace MVCHambugerProjesi.Controllers
                 OrderSize = DAL.Enums.OrderSize.Small
             };
 
+            //// Menü'nün OrderCount'ını arttır. -> Tracker hatası
+            //var menuDtos = await _menuService.GetAllMenus();
+            //var menuDto = menuDtos.FirstOrDefault(x => x.Id == menuItem.Id);
+            //menuDto.OrderCount++;
+            //await _menuService.UpdateMenu(menuDto.Id, menuDto);
+
+
             var createdOrder = await _orderService.CreateNewOrder(_mapper.Map<OrderDto>(newOrder));
             int orderId = createdOrder.Id;
 
             if (menuItem != null)
             {
-                // Aynı Id'ye sahip ExtraItem'ları gruplandır
-                var groupedExtraItems = extraItems.GroupBy(x => x.Id);
+                if (extraItems.Count > 0)
+                {
+                    // Aynı Id'ye sahip ExtraItem'ları gruplandır
+                    var groupedExtraItems = extraItems.GroupBy(x => x.Id);
 
-                foreach (var group in groupedExtraItems)
+                    foreach (var group in groupedExtraItems)
+                    {
+                        var newOrderDetail = new OrderDetailViewModel()
+                        {
+                            OrderId = orderId,
+                            AddressId = addressId,
+                            ExtraItemId = group.Key,
+                            MenuId = menuItem.Id,
+                            Quantity = group.Count()
+                        };
+
+                        await _orderService.CreateNewOrderDetail(_mapper.Map<OrderDetailDto>(newOrderDetail));
+                    }
+                }
+                else
                 {
                     var newOrderDetail = new OrderDetailViewModel()
                     {
                         OrderId = orderId,
                         AddressId = addressId,
-                        ExtraItemId = group.Key,
                         MenuId = menuItem.Id,
-                        Quantity = group.Count()
+                        Quantity = 1
                     };
 
                     await _orderService.CreateNewOrderDetail(_mapper.Map<OrderDetailDto>(newOrderDetail));
                 }
+              
             }
           
 
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpGet]
+        public IActionResult UserOrderDetails(int id)
+        {
+            var orderDetailDtos =  _orderService.GetAllOrderDetailsWithIncludes();
+
+            var userOrderDetailDtos = orderDetailDtos.Where(x => x.OrderId == id).ToList();
+            var userOrderDetailVieWModels = _mapper.Map<List<OrderDetailViewModel>>(userOrderDetailDtos);
+
+            return View(userOrderDetailVieWModels);
+        }
+
     }
 }

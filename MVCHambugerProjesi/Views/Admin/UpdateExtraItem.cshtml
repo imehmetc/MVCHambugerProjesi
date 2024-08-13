@@ -1,0 +1,48 @@
+﻿@model ExtraItemViewModel
+
+@{
+    ViewBag.Title = "Update Extra Item";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Update Extra Item</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form asp-action="UpdateExtraItem" asp-controller="Admin" method="post">
+                <div class="form-group mb-3">
+                    <label for="Name">Extra Item Name</label>
+                    <input type="text" class="form-control" id="Name" name="Name" value="@Model.Name" required>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="AdditionalPrice">Additional Price</label>
+                    <input type="number" step="0.01" class="form-control" id="AdditionalPrice" name="AdditionalPrice" value="@Model.AdditionalPrice" required>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success">Update Extra Item</button>
+                    <a asp-action="MenuAndExtraItemList" asp-controller="Admin" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    h2 {
+        color: #343a40;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .btn-success {
+        width: 150px;
+    }
+
+    .btn-secondary {
+        width: 150px;
+        margin-left: 10px;
+    }
+</style>

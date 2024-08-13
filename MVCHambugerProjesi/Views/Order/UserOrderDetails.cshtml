@@ -1,0 +1,74 @@
+﻿@model List<OrderDetailViewModel>
+
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Order Details</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Menu Name</th>
+                    <th>Menu Photo</th>
+                    <th>Order Date</th>
+                    <th>Total Price</th>
+                    <th>Status</th>
+                    <th>Address</th>
+                    <th>Extra Item</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var detail in Model)
+                {
+                    <tr>
+                        <td>@detail.MenuViewModel.Name</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(detail.MenuViewModel.Photo))
+                            {
+                                <img src="~/img/@detail.MenuViewModel.Photo" alt="Menu Photo" class="img-fluid rounded menu-photo" style="max-width: 100px;" />
+                            }
+                            else
+                            {
+                                <img src="https://via.placeholder.com/100" alt="Menu Photo" class="img-fluid rounded menu-photo" />
+                            }
+                        </td>
+                        <td>@detail.OrderViewModel.OrderDate.ToString("dd MMMM yyyy")</td>
+                        <td>@detail.OrderViewModel.TotalPrice.ToString("C")</td>
+                        <td>@(detail.OrderViewModel.IsActive ? "Active" : "Completed")</td>
+                        <td>@detail.AddressViewModel.FullAddress, @detail.AddressViewModel.City, @detail.AddressViewModel.Country</td>
+                        @if(detail.ExtraItemViewModel != null)
+                        {
+                            <td>@detail.ExtraItemViewModel.Name</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .menu-photo {
+        border-radius: 10px;
+        object-fit: cover;
+    }
+
+    .table-responsive {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+
+    table {
+        margin-bottom: 0;
+    }
+
+    thead {
+        background-color: #343a40;
+        color: #fff;
+    }
+
+    th, td {
+        vertical-align: middle;
+        text-align: center;
+    }
+</style>

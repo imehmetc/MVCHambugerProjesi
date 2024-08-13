@@ -9,7 +9,7 @@ namespace DAL.Entities
     public class OrderDetail : BaseEntity
     {
         public int AddressId { get; set; }
-        public int ExtraItemId { get; set; }
+        public int? ExtraItemId { get; set; }
         public int MenuId { get; set; }
         public int OrderId { get; set; }
         public int Quantity { get; set; }
