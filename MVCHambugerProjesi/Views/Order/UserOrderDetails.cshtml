@@ -1,5 +1,8 @@
 ﻿@model List<OrderDetailViewModel>
 
+@{
+    var extraItemNames = ViewBag.ExtraItemNames as List<string>;
+}
 
 <div class="container mt-5">
     <h2 class="text-center mb-4">Order Details</h2>
@@ -10,6 +13,7 @@
                 <tr>
                     <th>Menu Name</th>
                     <th>Menu Photo</th>
+                    <th>Menu Quantity</th>
                     <th>Order Date</th>
                     <th>Total Price</th>
                     <th>Status</th>
@@ -32,13 +36,14 @@
                                 <img src="https://via.placeholder.com/100" alt="Menu Photo" class="img-fluid rounded menu-photo" />
                             }
                         </td>
+                        <td>@detail.Quantity</td>
                         <td>@detail.OrderViewModel.OrderDate.ToString("dd MMMM yyyy")</td>
                         <td>@detail.OrderViewModel.TotalPrice.ToString("C")</td>
                         <td>@(detail.OrderViewModel.IsActive ? "Active" : "Completed")</td>
                         <td>@detail.AddressViewModel.FullAddress, @detail.AddressViewModel.City, @detail.AddressViewModel.Country</td>
-                        @if(detail.ExtraItemViewModel != null)
+                        @if (detail.ExtraItemViewModel != null)
                         {
-                            <td>@detail.ExtraItemViewModel.Name</td>
+                            <td>@string.Join(", ", extraItemNames)</td>
                         }
                     </tr>
                 }

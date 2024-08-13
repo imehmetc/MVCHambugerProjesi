@@ -128,8 +128,23 @@ namespace MVCHambugerProjesi.Controllers
         {
             var orderDetailDtos =  _orderService.GetAllOrderDetailsWithIncludes();
 
+
             var userOrderDetailDtos = orderDetailDtos.Where(x => x.OrderId == id).ToList();
             var userOrderDetailVieWModels = _mapper.Map<List<OrderDetailViewModel>>(userOrderDetailDtos);
+
+
+            // User'ın verdiği Siparişin ExtraItem Name'leri
+            List<string> extraItemNames = new List<string>(); 
+            
+            foreach (var item in userOrderDetailVieWModels)
+            {
+                if (item.ExtraItemViewModel != null)
+                {
+                    extraItemNames.Add(item.ExtraItemViewModel.Name);
+                }
+            }
+
+            ViewBag.ExtraItemNames = extraItemNames;
 
             return View(userOrderDetailVieWModels);
         }

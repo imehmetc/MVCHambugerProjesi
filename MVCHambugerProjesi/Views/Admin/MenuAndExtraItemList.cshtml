@@ -15,6 +15,7 @@
             <thead class="table-dark">
                 <tr>
                     <th>Name</th>
+                    <th>Photo</th>
                     <th>Price</th>
                     <th>Description</th>
                     <th>Order Count</th>
@@ -30,19 +31,29 @@
                 {
                     <tr>
                         <td>@menu.Name</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(menu.Photo))
+                            {
+                                <img src="~/img/@menu.Photo" alt="Menu Photo" class="img-thumbnail mt-3" style="max-width: 100px;">
+                            }
+                        </td>
                         <td>@menu.Price.ToString("C")</td>
                         <td>@menu.Description</td>
                         <td>@menu.OrderCount</td>
                         <td>@menu.ViewCount</td>
                         <td>
-                            <select class="form-select">
-                                <option value="">Extra Items</option>
-                                @foreach (var extraItem in Model.Where(x => x.MenuDetailViewModels.Any(x => x.MenuId == menu.Id)))
-                                {
-                                    <option value="@extraItem.Id">@extraItem.Name - @extraItem.AdditionalPrice.ToString("C")</option>
-                                }
-                            </select>
+                            <div class="d-flex align-items-center">
+                                <select class="form-select me-2">
+                                    <option value="">Extras</option>
+                                    @foreach (var extraItem in Model.Where(x => x.MenuDetailViewModels.Any(x => x.MenuId == menu.Id)))
+                                    {
+                                        <option value="@extraItem.Id">@extraItem.Name - @extraItem.AdditionalPrice.ToString("C")</option>
+                                    }
+                                </select>
+                                <button class="btn btn-outline-secondary btn-sm">+</button>
+                            </div>
                         </td>
+
                         <td><a asp-route-id="@menu.Id" asp-action="MenuDetail" asp-controller="Home" class="btn btn-outline-secondary">Detail</a></td>
                         <td><a asp-route-id="@menu.Id" asp-action="UpdateMenu" name="id" class="btn btn-outline-secondary">Update</a></td>
                         <td><a asp-route-id="@menu.Id" asp-action="DeleteMenu" name="id" class="btn btn-outline-secondary">Delete</a></td>
@@ -113,4 +124,14 @@
         border-radius: 5px;
         border: 1px solid #ced4da;
     }
+
+    .d-flex {
+        display: flex;
+        align-items: center;
+    }
+
+    .me-2 {
+        margin-right: 0.5rem; /* Bootstrap class - sağ tarafa 0.5rem boşluk bırakır */
+    }
+
 </style>

@@ -68,15 +68,17 @@ namespace DAL.Data
                     Photo = null,
                     Email = "admin@example.com",
                     Username = "admin",
-                    Password = "admin123",
+                    Password = "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9", // admin123
                     IsAdmin = true,
                     CreatedDate = DateTime.Now,
                     IsDeleted = false
                 },
-                new User { Id = 2, FirstName = "John", LastName = "Doe", BirthDate = new DateTime(1990, 5, 15), Email = "john@example.com", Username = "john", Password = "password123", IsAdmin = false },
-                new User { Id = 3, FirstName = "Jane", LastName = "Smith", BirthDate = new DateTime(1985, 7, 20), Email = "jane@example.com", Username = "jane", Password = "password123", IsAdmin = false },
-                new User { Id = 4, FirstName = "Michael", LastName = "Brown", BirthDate = new DateTime(1975, 3, 10), Email = "michael@example.com", Username = "michael", Password = "password123", IsAdmin = false },
-                new User { Id = 5, FirstName = "Emily", LastName = "Clark", BirthDate = new DateTime(1995, 8, 25), Email = "emily@example.com", Username = "emily", Password = "password123", IsAdmin = false }
+                
+                // Şifreleri password123
+                new User { Id = 2, FirstName = "John", LastName = "Doe", BirthDate = new DateTime(1990, 5, 15), Email = "john@example.com", Username = "john", Password = "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f", IsAdmin = false },
+                new User { Id = 3, FirstName = "Jane", LastName = "Smith", BirthDate = new DateTime(1985, 7, 20), Email = "jane@example.com", Username = "jane", Password = "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f", IsAdmin = false },
+                new User { Id = 4, FirstName = "Michael", LastName = "Brown", BirthDate = new DateTime(1975, 3, 10), Email = "michael@example.com", Username = "michael", Password = "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f", IsAdmin = false },
+                new User { Id = 5, FirstName = "Emily", LastName = "Clark", BirthDate = new DateTime(1995, 8, 25), Email = "emily@example.com", Username = "emily", Password = "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f", IsAdmin = false }
             );
 
             modelBuilder.Entity<Address>().HasData(

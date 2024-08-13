@@ -1,6 +1,7 @@
 ﻿@{
     var userId = Context.Session.GetInt32("UserId");
     var userName = Context.Session.GetString("UserName");
+    var IsAdmin = Context.Session.GetString("IsAdmin");
 }
 
 <header>
@@ -31,6 +32,12 @@
                         <li>
                             <a asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
                         </li>
+                        @if(IsAdmin == "True")
+                        {
+                            <li>
+                                <a asp-area="" asp-controller="Admin" asp-action="MenuAndExtraItemList">Menus And Extra Items</a>
+                            </li>
+                        }
                     }
 
                     else
