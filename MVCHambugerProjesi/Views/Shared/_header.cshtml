@@ -6,42 +6,49 @@
 
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm  box-shadow mb-3">
-        <div class="container">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="nav__links">
-                     <li>
-                    <a class="logo" asp-area="" asp-controller="Home" asp-action="Index">Logo</a>
+                    <li>
+                        <a class="logo" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/logo.png" alt="Alternate Text"/></a>
                     </li>
-                    @if (userId != null)
+                    <li class="dinone">
+                        <img style="margin-right: 15px;margin-left: 15px;" src="~/img/phone_icon.png" alt="#"><a href="#">987-654-3210</a>
+                    </li>
+                    <li class="dinone">
+                        <img style="margin-right: 15px;" src="~/img/mail_icon.png" alt="#"><a href="#">abc@gmail.com</a>
+                    </li>
+                    <li class="dinone">
+                        <img style="margin-right: 15px;height: 21px;position: relative;top: -2px;" src="~/img/location_icon.png" alt="#"><a href="#">Istanbul, Türkiye</a>
+                    </li>
+                    
+                    @if (userId != 0 && userId != null)
                     {
                         <li>
                             <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li>
-                            <span class="ms-2">@userName</span>
-                        </li>
-                        
-                        <li>
-                            <a  asp-route-id="@userId" asp-controller="User" asp-action="Profile"><button>Profile</button></a>
-                        </li>
-
-                        <li>
-                            <a asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
-                        </li>
-                        @if(IsAdmin == "True")
+                        @if (IsAdmin == "True")
                         {
                             <li>
                                 <a asp-area="" asp-controller="Admin" asp-action="MenuAndExtraItemList">Menus And Extra Items</a>
                             </li>
                         }
+                        <li>
+                            <a asp-route-id="@userId" asp-controller="User" asp-action="Profile"> <span class="ms-2">@userName</span> </a>
+                        </li>
+                     
+                        <li>
+                            <a asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
+                        </li>
+
                     }
 
                     else
                     {
+                        
                         <li>
                             <a asp-area="" asp-controller="User" asp-action="Login">Login</a>
                         </li>
@@ -52,7 +59,5 @@
                     }
                 </ul>
             </div>
-
-        </div>
     </nav>
 </header>
