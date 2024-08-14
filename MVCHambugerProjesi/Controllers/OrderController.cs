@@ -33,7 +33,7 @@ namespace MVCHambugerProjesi.Controllers
             double totalAmount = 0;
             foreach (var item in items)
             {
-                totalAmount += Convert.ToDouble(item.Price.Replace("₺", "")); // ₺5.99
+                totalAmount += Convert.ToDouble(item.Price.Replace("$", "")); // ₺5.99
             }
 
             ViewBag.TotalAmount = totalAmount;

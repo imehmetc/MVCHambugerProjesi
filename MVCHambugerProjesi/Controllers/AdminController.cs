@@ -197,5 +197,39 @@ namespace MVCHambugerProjesi.Controllers
             return RedirectToAction("MenuAndExtraItemList");
         }
 
+        
+        [HttpGet]
+        public async Task<IActionResult> AddExtraItemToMenu(int id)
+        {
+            var menuDtos = await _menuService.GetAllMenus();
+            var menu = menuDtos.FirstOrDefault(x => x.Id == id);
+            var menuViewModel = _mapper.Map<MenuViewModel>(menu);
+
+            var extraItemDtos = await _extraItemService.GetAllExtraItemsWithIncludes();
+            var extraItemViewModels = _mapper.Map<List<ExtraItemViewModel>>(extraItemDtos);
+            ViewBag.ExtraItemViewModels = extraItemViewModels;
+
+            return View(menuViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddExtraItemToMenu(int id, int extraItemId)
+        {
+            await _menuDetailService.AddMenuDetail(extraItemId, id);
+
+            return RedirectToAction("MenuAndExtraItemList");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteExtraItemToMenu(int id, int extraItemId)
+        {
+            var menuDetailDtos = await _menuDetailService.GettAllMenuDetails();
+            var menuDetailDto = menuDetailDtos.FirstOrDefault(x => x.MenuId == id && x.ExtraItemId == extraItemId);
+
+
+            await _menuDetailService.DeleteMenuDetail(menuDetailDto.Id);
+
+            return RedirectToAction("MenuAndExtraItemList");
+        }
     }
 }

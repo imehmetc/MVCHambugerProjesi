@@ -45,12 +45,12 @@
                             <div class="d-flex align-items-center">
                                 <select class="form-select me-2">
                                     <option value="">Extras</option>
-                                    @foreach (var extraItem in Model.Where(x => x.MenuDetailViewModels.Any(x => x.MenuId == menu.Id)))
+                                    @foreach (var extraItem in Model.Where(x => x.MenuDetailViewModels.Any(x => x.MenuId == menu.Id && x.IsDeleted == false)))
                                     {
                                         <option value="@extraItem.Id">@extraItem.Name - @extraItem.AdditionalPrice.ToString("C")</option>
                                     }
                                 </select>
-                                <button class="btn btn-outline-secondary btn-sm">+</button>
+                                <a class="btn btn-outline-secondary btn-sm" asp-route-id="@menu.Id" asp-action="AddExtraItemToMenu" name="id">+</a>
                             </div>
                         </td>
 

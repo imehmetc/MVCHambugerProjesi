@@ -14,7 +14,6 @@
             <div class="list-group-item d-flex justify-content-between align-items-center">
                 <img src="@item.Image" class="img-thumbnail" style="width: 50px; height: 50px;" />
                 <div>
-                    <p class="mb-1">@item.Id</p>
                     <h5 class="mb-1">@item.Title</h5>
                     <p class="mb-1">@item.Price</p>
                 </div>
@@ -22,7 +21,7 @@
         }
     </div>
     <hr />
-    <p>Toplam Tutar: <strong>@ViewBag.TotalAmount ₺</strong> </p>
+    <p>Toplam Tutar: <strong>@ViewBag.TotalAmount $</strong> </p>
     <div class="mb-4">
         <form asp-action="CreateOrder" method="POST">    
             <label>Adres Seçin: </label>

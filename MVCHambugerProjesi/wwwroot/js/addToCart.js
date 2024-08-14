@@ -70,7 +70,7 @@ class UI {
                 let priceElement = cartListItem[i].getElementsByClassName("price")[0];
                 let price = priceElement.getAttribute("data-price");
 
-                let newPrice = price.replace("₺", "");
+                let newPrice = price.replace("$", "");
                 newPrice = parseFloat(newPrice);
 
                 totalAmount += newPrice;
@@ -79,7 +79,7 @@ class UI {
             totalAmountDiv.classList = "total-amount";
             totalAmountDiv.innerHTML =
                 `
-                <hr><h5 class="text-center text-primary">Total Amount: <p class="text-dark" style="display:inline;">₺${totalAmount}</p></h5>
+                <hr><h5 class="text-center text-primary">Total Amount: <p class="text-dark" style="display:inline;">$${totalAmount}</p></h5>
                 <button class="btn btn-delete text-danger btn-order"><i class="bi bi-arrow-up-right-square-fill"></i>Sipariş Ver</button>
             `;
 

@@ -1,0 +1,129 @@
+﻿@model MenuViewModel
+
+@{
+    var extraItemViewModels = ViewBag.ExtraItemViewModels as List<ExtraItemViewModel>;
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Update Menu</h2>
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-8">
+            <form asp-action="AddExtraItemToMenu" asp-controller="Admin" method="post" enctype="multipart/form-data">
+                <input type="text" value="@Model.Id" hidden name="id" />
+
+                <!-- Existing fields -->
+                <div class="form-group mb-3">
+                    <label for="Name">Menu Name</label>
+                    <input type="text" class="form-control" id="Name" name="Name" value="@Model.Name" required readonly>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="Price">Price</label>
+                    <input type="number" step="0.01" class="form-control" id="Price" name="Price" value="@Model.Price" required readonly>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="Description">Description</label>
+                    <textarea class="form-control" id="Description" name="Description" rows="4" required readonly>@Model.Description</textarea>
+                </div>
+
+                <div class="form-group mb-3">
+                    @if (!string.IsNullOrEmpty(Model.Photo))
+                    {
+                        <label for="Photo">Menu Photo</label>
+                        <img src="~/img/@Model.Photo" alt="Menu Photo" class="img-thumbnail mt-3" style="max-width: 200px;">
+                    }
+                </div>
+
+                <!-- New Extra Item Select -->
+                <div class="d-flex justify-content-between mb-3">
+                    <div class="w-50 me-2">
+                        <label for="extraItemSelect">Add Extra</label>
+                        <form asp-action="AddExtraItemToMenu" asp-controller="Admin" method="POST">
+                            <input type="text" value="@Model.Id" hidden name="id" />
+                            <select class="form-select" name="extraItemId">
+                                <option value="">All Extras</option>
+                                @foreach (var extraItem in extraItemViewModels)
+                                {
+                                    <option value="@extraItem.Id">@extraItem.Name - @extraItem.AdditionalPrice.ToString("C")</option>
+                                }
+                            </select>
+                            <button type="submit" class="btn btn-success mt-2 w-100">Add Extra</button>
+                        </form>
+                        
+                    </div>
+
+                    <!-- Existing Extra Item Select -->
+                    <div class="w-50 ms-2">
+                        <label for="deleteExtraItemSelect">Delete Exists Extra</label>
+                        <form asp-action="DeleteExtraItemToMenu" asp-controller="Admin" method="POST">
+                            <input type="text" value="@Model.Id" hidden name="id" />
+                            <select class="form-select" name="extraItemId">
+                                <option value="">Existing Extras</option>
+                                @foreach (var extraItem in extraItemViewModels.Where(x => x.MenuDetailViewModels.Any(x => x.MenuId == Model.Id && x.IsDeleted == false)))
+                                {
+                                    <option value="@extraItem.Id">@extraItem.Name - @extraItem.AdditionalPrice.ToString("C")</option>
+                                }
+                            </select>
+                            <button type="submit" class="btn btn-danger mt-2 w-100">Delete Extra</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Existing fields -->
+                <div class="form-group mb-3">
+                    <label for="OrderCount">Order Count</label>
+                    <input type="number" class="form-control" id="OrderCount" name="OrderCount" value="@Model.OrderCount" readonly>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="ViewCount">View Count</label>
+                    <input type="number" class="form-control" id="ViewCount" name="ViewCount" value="@Model.ViewCount" readonly>
+                </div>
+
+                <div class="text-center">
+                    <a asp-action="MenuAndExtraItemList" asp-controller="Admin" class="btn btn-secondary w-50">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    h2 {
+        color: #343a40;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .btn-primary, .btn-secondary, .btn-success, .btn-danger {
+        width: 150px;
+    }
+
+    .d-flex {
+        display: flex;
+        align-items: center;
+    }
+
+    .w-50 {
+        width: 50%;
+    }
+
+    .me-2 {
+        margin-right: 0.5rem;
+    }
+
+    .ms-2 {
+        margin-left: 0.5rem;
+    }
+
+    .w-100 {
+        width: 100%;
+    }
+
+    .mt-2 {
+        margin-top: 0.5rem;
+    }
+</style>

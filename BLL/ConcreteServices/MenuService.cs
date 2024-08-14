@@ -42,7 +42,7 @@ namespace BLL.ConcreteServices
 
         public async Task<List<MenuDetailDto>> GetAllMenuDetails()
         {
-            var menus = await _menuDetailRepository.GetAllWithIncludes(x => x.Menu, x => x.ExtraItem).ToListAsync();
+            var menus = await _menuDetailRepository.GetAllWithIncludes(x => x.Menu, x => x.ExtraItem).Where(x => x.IsDeleted == false).ToListAsync();
             var result = _mapper.Map<List<MenuDetailDto>>(menus);
             
             return result;

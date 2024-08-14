@@ -14,5 +14,6 @@ namespace BLL.AbstractServices
         Task DeleteMenuDetail(int menuDetailId);
         Task RemoveMenuDetail(int menuDetailId);
         Task DeleteRangeAsync(IEnumerable<int> ids);
+        Task<MenuDetailDto> GetMenuDetailById(int menuDetailId);
     }
 }

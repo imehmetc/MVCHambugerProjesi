@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="~/css/profile.css" />
 }
 
-<div class="container">
+<div class="container mb-5">
     <div class="profile-header text-center">
         @if (!string.IsNullOrEmpty(Model.Photo))
         {
@@ -35,13 +35,6 @@
         <a class="btn btn-primary" asp-route-id="@Model.Id" asp-controller="User" asp-action="PasswordChange">PasswordChange</a>
     </div>
 
-    <div class="profile-info">
-        <h4>About</h4>
-        <p>@Model.FirstName @Model.LastName's Profile Page</p>
-    </div>
-    <a class="btn btn-success w-25">Pending Orders</a>
-    
-    <hr />
     <!-- Sipariş Geçmişi -->
     <div class="order-history">
         <h4 class="text-center">Order History</h4>
@@ -71,5 +64,4 @@
             </table>
         </div>
     </div>
-
 </div>

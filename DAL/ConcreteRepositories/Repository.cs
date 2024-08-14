@@ -82,7 +82,7 @@ namespace DAL.ConcreteRepositories
 
         public IQueryable<T> GetAllWithIncludes(params Expression<Func<T, object>>[] includes)
         {
-            IQueryable<T> query = _entities.Where(x => !x.IsDeleted);
+            IQueryable<T> query = _entities.AsNoTracking().Where(x => !x.IsDeleted);
 
             foreach (var item in includes)
             {

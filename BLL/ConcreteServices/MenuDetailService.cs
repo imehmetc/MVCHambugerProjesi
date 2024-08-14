@@ -30,13 +30,26 @@ namespace BLL.ConcreteServices
 
         public async Task AddMenuDetail(int extraItemId, int menuId)
         {
-            var menuDetail = new MenuDetailDto()
-            {
-                MenuId = menuId,
-                ExtraItemId = extraItemId
-            };
+            var menuDetails = await _menuDetailService.GetAllAsync();
 
-            await _menuDetailService.AddAsync(_mapper.Map<MenuDetail>(menuDetail));
+            if (!menuDetails.Any(x => x.MenuId == menuId && x.ExtraItemId == extraItemId))
+            {
+                var menuDetail = new MenuDetailDto()
+                {
+                    MenuId = menuId,
+                    ExtraItemId = extraItemId
+                };
+
+                await _menuDetailService.AddAsync(_mapper.Map<MenuDetail>(menuDetail));
+            }
+        }
+
+        public async Task<MenuDetailDto> GetMenuDetailById(int menuDetailId)
+        {
+            var menuDetail = await _menuDetailService.GetByIdAsync(menuDetailId);
+            var menuDetailDto = _mapper.Map<MenuDetailDto>(menuDetail);
+
+            return menuDetailDto;
         }
 
         public async Task DeleteMenuDetail(int menuDetailId)
@@ -52,7 +65,7 @@ namespace BLL.ConcreteServices
 
         public async Task<List<MenuDetailDto>> GettAllMenuDetails()
         {
-            var menuDetails = await _menuDetailService.GetAllWithIncludes(x => x.Menu, x => x.ExtraItem).ToListAsync();
+            var menuDetails = await _menuDetailService.GetAllWithIncludes(x => x.Menu, x => x.ExtraItem).Where(x => x.IsDeleted == false).ToListAsync();
             
             return _mapper.Map<List<MenuDetailDto>>(menuDetails);
         }
