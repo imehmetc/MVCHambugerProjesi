@@ -14,12 +14,14 @@ namespace MVCHambugerProjesi.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IMenuService _menuService;
+        private readonly IOrderService _orderService;
         private readonly IMapper _mapper;
 
-        public HomeController(ILogger<HomeController> logger, IMenuService menuService, IMapper mapper)
+        public HomeController(ILogger<HomeController> logger, IMenuService menuService, IOrderService orderService, IMapper mapper)
         {
             _logger = logger;
             _menuService = menuService;
+            _orderService = orderService;
             _mapper = mapper;
         }
 
@@ -35,6 +37,13 @@ namespace MVCHambugerProjesi.Controllers
             var menus = await _menuService.GetAllMenus();
             var pageNumbers = Math.Ceiling((double)menus.Count() / 5);
             ViewBag.PageNumbers = pageNumbers;
+
+
+            //// Teslim edilmemiş siparişler
+            //var orderDtos = await _orderService.GetAllOrders();
+            //var unDeliveredOrderDtos = orderDtos.Where(x => x.IsActive == true).ToList();
+            //var unDeliveredOrders = _mapper.Map<List<OrderViewModel>>(unDeliveredOrderDtos);
+            //ViewBag.UndeliveredOrders = unDeliveredOrders;
 
             var result = _mapper.Map<List<MenuViewModel>>(posts);
             

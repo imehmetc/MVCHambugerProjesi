@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="~/css/profile.css" />
 }
 
-<div class="container mb-5">
+<div class="container mb-5 mt-3">
     <div class="profile-header text-center">
         @if (!string.IsNullOrEmpty(Model.Photo))
         {
@@ -23,16 +23,6 @@
         <h1>@Model.FirstName @Model.LastName</h1>
         <p>@Model.Username</p>
         <p><strong>Birth Date:</strong> @Model.BirthDate.ToString("dd MMMM yyyy")</p>
-
-        <!-- Fotoğraf Ekleme Formu -->
-        <form asp-action="UpdatePhoto" method="POST" enctype="multipart/form-data">
-            <div class="mb-3 ">
-                <input asp-for="Id" name="userId" hidden />
-                <input asp-for="Photo" name="photo" type="file" class="form-control w-25 d-inline-block" id="photo" required>
-                <button type="submit" class="btn btn-success mt-3" id="saveButton">Save</button>
-            </div>
-        </form>
-        <a class="btn btn-primary" asp-route-id="@Model.Id" asp-controller="User" asp-action="PasswordChange">PasswordChange</a>
     </div>
 
     <!-- Sipariş Geçmişi -->
